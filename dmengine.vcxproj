@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{FFF4523C-10B6-46DB-A085-4B9784F02949}</ProjectGuid>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <Keyword>ManagedCProj</Keyword>
+    <RootNamespace>dmengine</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CLRSupport>false</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CLRSupport>true</CLRSupport>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;DM_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(ProjectDir)\dmengine\core;$(ProjectDir)\dmengine\graphics;$(ProjectDir)\dmengine\public;$(ProjectDir)\dmengine\utils;$(ProjectDir)\dmengine\filesystem;$(ProjectDir)\dmengine\windowsystem;$(ProjectDir)\dmengine\network;$(ProjectDir)\dmengine\3rdparty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <CompileAsManaged>
+      </CompileAsManaged>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
+      <OutputFile>$(SolutionDir)$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
+      <AdditionalLibraryDirectories>$(ProjectDir)dmengine\3rdparty\curl\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>
+      </AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dmengine\core\dmapplication.cpp" />
+    <ClCompile Include="dmengine\core\dmautoreleasemgr.cpp" />
+    <ClCompile Include="dmengine\core\dmbroadcast.cpp" />
+    <ClCompile Include="dmengine\core\dmbroadcastfilter.cpp" />
+    <ClCompile Include="dmengine\core\dmbroadcastreceiver.cpp" />
+    <ClCompile Include="dmengine\core\dmcoreapplication.cpp" />
+    <ClCompile Include="dmengine\core\dmeventfilter.cpp" />
+    <ClCompile Include="dmengine\core\dminteractiveobject.cpp" />
+    <ClCompile Include="dmengine\core\dmliveobject.cpp" />
+    <ClCompile Include="dmengine\core\dmmalloc.cpp" />
+    <ClCompile Include="dmengine\core\dmobject.cpp" />
+    <ClCompile Include="dmengine\core\dmobserver.cpp" />
+    <ClCompile Include="dmengine\core\dmtimer.cpp" />
+    <ClCompile Include="dmengine\core\events\dmpostevent.cpp" />
+    <ClCompile Include="dmengine\core\input\dmtouchdispatcher.cpp" />
+    <ClCompile Include="dmengine\core\private\dmliveobject_p.cpp" />
+    <ClCompile Include="dmengine\core\thread\dmatomic.cpp" />
+    <ClCompile Include="dmengine\core\thread\dmcondition.cpp" />
+    <ClCompile Include="dmengine\core\thread\dmexecutor.cpp" />
+    <ClCompile Include="dmengine\core\thread\dmreadwritelock.cpp" />
+    <ClCompile Include="dmengine\core\thread\dmthread.cpp" />
+    <ClCompile Include="dmengine\core\thread\win\dmthread_win32.cpp" />
+    <ClCompile Include="dmengine\core\thread\win\dmwinpthreads.cpp" />
+    <ClCompile Include="dmengine\filesystem\dmdir.cpp" />
+    <ClCompile Include="dmengine\filesystem\dmfile.cpp" />
+    <ClCompile Include="dmengine\filesystem\dmfileinfo.cpp" />
+    <ClCompile Include="dmengine\filesystem\dmifile.cpp" />
+    <ClCompile Include="dmengine\filesystem\fileformat\json\dmjsonbuilder.cpp" />
+    <ClCompile Include="dmengine\filesystem\fileformat\json\dmjsonreader.cpp" />
+    <ClCompile Include="dmengine\filesystem\fileformat\json\dmjsonwriter.cpp" />
+    <ClCompile Include="dmengine\filesystem\platform\dmfilehelper.cpp" />
+    <ClCompile Include="dmengine\filesystem\platform\win32\dmfilewin32.cpp" />
+    <ClCompile Include="dmengine\graphics\dmcircle.cpp" />
+    <ClCompile Include="dmengine\graphics\dmdirection.cpp" />
+    <ClCompile Include="dmengine\graphics\dmgraphicsitem.cpp" />
+    <ClCompile Include="dmengine\graphics\dmgraphicsmath.cpp" />
+    <ClCompile Include="dmengine\graphics\dmgraphicsobjectproxy.cpp" />
+    <ClCompile Include="dmengine\graphics\dmline.cpp" />
+    <ClCompile Include="dmengine\graphics\dmpoint.cpp" />
+    <ClCompile Include="dmengine\graphics\dmrect.cpp" />
+    <ClCompile Include="dmengine\graphics\dmsize.cpp" />
+    <ClCompile Include="dmengine\network\dmsocket.cpp" />
+    <ClCompile Include="dmengine\network\http\dmhttpclient.cpp" />
+    <ClCompile Include="dmengine\network\http\dmhttprequest.cpp" />
+    <ClCompile Include="dmengine\public\dmcow.cpp" />
+    <ClCompile Include="dmengine\public\dmmath.cpp" />
+    <ClCompile Include="dmengine\public\dmrefcount.cpp" />
+    <ClCompile Include="dmengine\utils\dmbuiltin.cpp" />
+    <ClCompile Include="dmengine\utils\dmchar.cpp" />
+    <ClCompile Include="dmengine\utils\dmcharsetconverter.cpp" />
+    <ClCompile Include="dmengine\utils\dmcollision.cpp" />
+    <ClCompile Include="dmengine\utils\dmdatabuffer.cpp" />
+    <ClCompile Include="dmengine\utils\dmendtime.cpp" />
+    <ClCompile Include="dmengine\utils\dmeventhandler.cpp" />
+    <ClCompile Include="dmengine\utils\dmgraphicsutils.cpp" />
+    <ClCompile Include="dmengine\utils\dmhash.cpp" />
+    <ClCompile Include="dmengine\utils\dmlogger.cpp" />
+    <ClCompile Include="dmengine\utils\dmmetatype.cpp" />
+    <ClCompile Include="dmengine\utils\dmprobabilityutil.cpp" />
+    <ClCompile Include="dmengine\utils\dmrandom.cpp" />
+    <ClCompile Include="dmengine\utils\dmrefarray.cpp" />
+    <ClCompile Include="dmengine\utils\dmstringtypeutils.cpp" />
+    <ClCompile Include="dmengine\utils\dmtime.cpp" />
+    <ClCompile Include="dmengine\utils\dmutilstring.cpp" />
+    <ClCompile Include="dmengine\utils\dmvariant.cpp" />
+    <ClCompile Include="dmengine\utils\dmvector.cpp" />
+    <ClCompile Include="dmengine\utils\dmzonehelper.cpp" />
+    <ClCompile Include="dmengine\utils\md5\dmmd5.cpp" />
+    <ClCompile Include="dmengine\utils\plugin\dmclassloader.cpp" />
+    <ClCompile Include="dmengine\utils\plugin\dmlibrary.cpp" />
+    <ClCompile Include="dmengine\utils\plugin\dmlibraryloader.cpp" />
+    <ClCompile Include="dmengine\utils\plugin\private\dmdllloader_win.cpp" />
+    <ClCompile Include="dmengine\utils\private\dmrefarray_p.cpp" />
+    <ClCompile Include="dmengine\utils\private\dmutilstring_p.cpp" />
+    <ClCompile Include="dmengine\utils\thread\arch\common\dmpoolthread.cpp" />
+    <ClCompile Include="dmengine\utils\thread\arch\common\dmthreadpool_common.cpp" />
+    <ClCompile Include="dmengine\utils\thread\dmatomicarray.cpp" />
+    <ClCompile Include="dmengine\utils\thread\dmloopthread.cpp" />
+    <ClCompile Include="dmengine\windowsystem\dmwidget.cpp" />
+    <ClCompile Include="dmengine\windowsystem\dmwindowsystem.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="dmengine\core\arch\arm\dmatomicint_arm.h" />
+    <ClInclude Include="dmengine\core\arch\dmatomicint_arch.h" />
+    <ClInclude Include="dmengine\core\arch\dmatomicint_no.h" />
+    <ClInclude Include="dmengine\core\arch\i386\dmatomicint_i386.h" />
+    <ClInclude Include="dmengine\core\arch\ia_64\dmatomicint_ia64.h" />
+    <ClInclude Include="dmengine\core\arch\win\dmatomicint_win.h" />
+    <ClInclude Include="dmengine\core\dmappconfig.h" />
+    <ClInclude Include="dmengine\core\dmapplication.h" />
+    <ClInclude Include="dmengine\core\dmatomicint.h" />
+    <ClInclude Include="dmengine\core\dmautoreleasemgr.h" />
+    <ClInclude Include="dmengine\core\dmbroadcast.h" />
+    <ClInclude Include="dmengine\core\dmbroadcastfilter.h" />
+    <ClInclude Include="dmengine\core\dmbroadcastreceiver.h" />
+    <ClInclude Include="dmengine\core\dmcallback.h" />
+    <ClInclude Include="dmengine\core\dmcoreapplication.h" />
+    <ClInclude Include="dmengine\core\dmevent.h" />
+    <ClInclude Include="dmengine\core\dmeventfilter.h" />
+    <ClInclude Include="dmengine\core\dminteractiveobject.h" />
+    <ClInclude Include="dmengine\core\dmliveobject.h" />
+    <ClInclude Include="dmengine\core\dmmalloc.h" />
+    <ClInclude Include="dmengine\core\dmobject.h" />
+    <ClInclude Include="dmengine\core\dmobjectpro.h" />
+    <ClInclude Include="dmengine\core\dmobserver.h" />
+    <ClInclude Include="dmengine\core\dmtimer.h" />
+    <ClInclude Include="dmengine\core\events\dminputevent.h" />
+    <ClInclude Include="dmengine\core\events\dmpaintevent.h" />
+    <ClInclude Include="dmengine\core\events\dmpostevent.h" />
+    <ClInclude Include="dmengine\core\events\dmwindowevent.h" />
+    <ClInclude Include="dmengine\core\input\dmtouchdispatcher.h" />
+    <ClInclude Include="dmengine\core\private\dmbroadcast_p.h" />
+    <ClInclude Include="dmengine\core\private\dmcoreapplication_p.h" />
+    <ClInclude Include="dmengine\core\private\dmliveobject_p.h" />
+    <ClInclude Include="dmengine\core\thread\dmatomic.h" />
+    <ClInclude Include="dmengine\core\thread\dmcondition.h" />
+    <ClInclude Include="dmengine\core\thread\dmexectask.h" />
+    <ClInclude Include="dmengine\core\thread\dmexecutor.h" />
+    <ClInclude Include="dmengine\core\thread\dmmutex.h" />
+    <ClInclude Include="dmengine\core\thread\dmreadwritelock.h" />
+    <ClInclude Include="dmengine\core\thread\dmsinglelock.h" />
+    <ClInclude Include="dmengine\core\thread\dmtask.h" />
+    <ClInclude Include="dmengine\core\thread\dmthread.h" />
+    <ClInclude Include="dmengine\core\thread\dmthread_arch.h" />
+    <ClInclude Include="dmengine\core\thread\private\dmconditionimpl.h" />
+    <ClInclude Include="dmengine\core\thread\private\dmthread_p.h" />
+    <ClInclude Include="dmengine\core\thread\unix\dmmutex_pthread.h" />
+    <ClInclude Include="dmengine\core\thread\win\dmmutex_win.h" />
+    <ClInclude Include="dmengine\core\thread\win\dmthread_win32.h" />
+    <ClInclude Include="dmengine\core\thread\win\dmwinpthreads.h" />
+    <ClInclude Include="dmengine\filesystem\dmdir.h" />
+    <ClInclude Include="dmengine\filesystem\dmfile.h" />
+    <ClInclude Include="dmengine\filesystem\dmfileinfo.h" />
+    <ClInclude Include="dmengine\filesystem\dmifile.h" />
+    <ClInclude Include="dmengine\filesystem\fileformat\json\dmjsonbuilder.h" />
+    <ClInclude Include="dmengine\filesystem\fileformat\json\dmjsonreader.h" />
+    <ClInclude Include="dmengine\filesystem\fileformat\json\dmjsonwriter.h" />
+    <ClInclude Include="dmengine\filesystem\platform\dmfilehelper.h" />
+    <ClInclude Include="dmengine\filesystem\platform\dmfilesystem_arch.h" />
+    <ClInclude Include="dmengine\filesystem\platform\win32\dmfilewin32.h" />
+    <ClInclude Include="dmengine\graphics\dmcircle.h" />
+    <ClInclude Include="dmengine\graphics\dmdirection.h" />
+    <ClInclude Include="dmengine\graphics\dmgraphicsitem.h" />
+    <ClInclude Include="dmengine\graphics\dmgraphicsmath.h" />
+    <ClInclude Include="dmengine\graphics\dmgraphicsobjectproxy.h" />
+    <ClInclude Include="dmengine\graphics\dmline.h" />
+    <ClInclude Include="dmengine\graphics\dmpoint.h" />
+    <ClInclude Include="dmengine\graphics\dmpointf.h" />
+    <ClInclude Include="dmengine\graphics\dmrect.h" />
+    <ClInclude Include="dmengine\graphics\dmsize.h" />
+    <ClInclude Include="dmengine\network\dmisocket.h" />
+    <ClInclude Include="dmengine\network\dmsocket.h" />
+    <ClInclude Include="dmengine\network\http\dmhttpclient.h" />
+    <ClInclude Include="dmengine\network\http\dmhttprequest.h" />
+    <ClInclude Include="dmengine\public\dmcow.h" />
+    <ClInclude Include="dmengine\public\dmflag.h" />
+    <ClInclude Include="dmengine\public\dmglobal.h" />
+    <ClInclude Include="dmengine\public\dmmacro.h" />
+    <ClInclude Include="dmengine\public\dmmath.h" />
+    <ClInclude Include="dmengine\public\dmnamespace.h" />
+    <ClInclude Include="dmengine\public\dmpublic.h" />
+    <ClInclude Include="dmengine\public\dmrefcount.h" />
+    <ClInclude Include="dmengine\public\dmrefptr.h" />
+    <ClInclude Include="dmengine\public\dmsingleton.h" />
+    <ClInclude Include="dmengine\public\dmtypeinfo.h" />
+    <ClInclude Include="dmengine\utils\dmbuiltin.h" />
+    <ClInclude Include="dmengine\utils\dmchar.h" />
+    <ClInclude Include="dmengine\utils\dmcharsetconverter.h" />
+    <ClInclude Include="dmengine\utils\dmcollision.h" />
+    <ClInclude Include="dmengine\utils\dmdatabuffer.h" />
+    <ClInclude Include="dmengine\utils\dmdebug.h" />
+    <ClInclude Include="dmengine\utils\dmdict.h" />
+    <ClInclude Include="dmengine\utils\dmendtime.h" />
+    <ClInclude Include="dmengine\utils\dmeventhandler.h" />
+    <ClInclude Include="dmengine\utils\dmgraphicsutils.h" />
+    <ClInclude Include="dmengine\utils\dmhash.h" />
+    <ClInclude Include="dmengine\utils\dmlog.h" />
+    <ClInclude Include="dmengine\utils\dmlogger.h" />
+    <ClInclude Include="dmengine\utils\dmmetadata.h" />
+    <ClInclude Include="dmengine\utils\dmmetatype.h" />
+    <ClInclude Include="dmengine\utils\dmpair.h" />
+    <ClInclude Include="dmengine\utils\dmpairlist.h" />
+    <ClInclude Include="dmengine\utils\dmprobabilityutil.h" />
+    <ClInclude Include="dmengine\utils\dmrandom.h" />
+    <ClInclude Include="dmengine\utils\dmrefarray.h" />
+    <ClInclude Include="dmengine\utils\dmrefvariant.h" />
+    <ClInclude Include="dmengine\utils\dmstringtypeutils.h" />
+    <ClInclude Include="dmengine\utils\dmtime.h" />
+    <ClInclude Include="dmengine\utils\dmutilstring.h" />
+    <ClInclude Include="dmengine\utils\dmvariant.h" />
+    <ClInclude Include="dmengine\utils\dmvecmap.h" />
+    <ClInclude Include="dmengine\utils\dmvector.h" />
+    <ClInclude Include="dmengine\utils\dmzonehelper.h" />
+    <ClInclude Include="dmengine\utils\md5\dmmd5.h" />
+    <ClInclude Include="dmengine\utils\plugin\dmclassloader.h" />
+    <ClInclude Include="dmengine\utils\plugin\dmlibrary.h" />
+    <ClInclude Include="dmengine\utils\plugin\dmlibrarydef.h" />
+    <ClInclude Include="dmengine\utils\plugin\dmlibraryloader.h" />
+    <ClInclude Include="dmengine\utils\plugin\private\dmclassloader_p.h" />
+    <ClInclude Include="dmengine\utils\plugin\private\dmdllloader_win.h" />
+    <ClInclude Include="dmengine\utils\plugin\private\dmlibrary_p.h" />
+    <ClInclude Include="dmengine\utils\private\dmrefarray_p.h" />
+    <ClInclude Include="dmengine\utils\private\dmutilstring_p.h" />
+    <ClInclude Include="dmengine\utils\private\dmvariant_p.h" />
+    <ClInclude Include="dmengine\utils\private\StdString.h" />
+    <ClInclude Include="dmengine\utils\thread\arch\common\dmpoolthread.h" />
+    <ClInclude Include="dmengine\utils\thread\arch\dmthreadpool_arch.h" />
+    <ClInclude Include="dmengine\utils\thread\dmatomicarray.h" />
+    <ClInclude Include="dmengine\utils\thread\dmatomicsingleton.h" />
+    <ClInclude Include="dmengine\utils\thread\dmloopthread.h" />
+    <ClInclude Include="dmengine\utils\thread\dmthreadpool.h" />
+    <ClInclude Include="dmengine\windowsystem\dmdisplaylayer.h" />
+    <ClInclude Include="dmengine\windowsystem\dmwidget.h" />
+    <ClInclude Include="dmengine\windowsystem\dmwindowsystem.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

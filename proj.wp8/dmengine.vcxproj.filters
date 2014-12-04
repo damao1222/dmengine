@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="core">
+      <UniqueIdentifier>{4779308f-d8ee-48fe-93e9-a59bfab11555}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="graphics">
+      <UniqueIdentifier>{a376aa11-918a-4fe8-a08a-5b6d2dca3ac0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{05f0a6e8-2942-4f9a-a2a3-3a70b9032df0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="public">
+      <UniqueIdentifier>{d1db6612-a9e2-4713-a045-7b3143fefc1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\arch">
+      <UniqueIdentifier>{036820f1-fc68-4e53-b4d8-b7ee492b8f2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\private">
+      <UniqueIdentifier>{f884c6b1-41d6-4595-ac84-dfbddde97c86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\events">
+      <UniqueIdentifier>{88e60261-0a42-4513-8013-66983e29da87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\thread">
+      <UniqueIdentifier>{4c257909-f795-4508-933d-980b1a134227}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core\thread\arch">
+      <UniqueIdentifier>{9265713e-81d7-4ace-9afa-08fe167aac19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils\private">
+      <UniqueIdentifier>{9317e3de-f11f-461e-b659-6eed123aef68}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="pch.cpp" />
+    <ClCompile Include="..\dmengine\public\dmmath.cpp">
+      <Filter>public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\graphics\dmcircle.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\graphics\dmdirection.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\graphics\dmgraphicsmath.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\graphics\dmline.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\graphics\dmpoint.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\graphics\dmrect.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\core\dmapplication.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\core\dmautoreleasemgr.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\core\dmcoreapplication.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\core\dmeventfilter.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\core\dmgraphicsitem.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\core\dmgraphicsobject.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\core\dmliveobject.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\core\dmmalloc.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\core\dmobject.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\core\dmobserver.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\core\dmtimer.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\core\private\dmliveobject_p.cpp">
+      <Filter>core\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\core\thread\dmthread.cpp">
+      <Filter>core\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\utils\dmbytebuffer.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\utils\dmcollision.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\utils\dmgraphicsutils.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\utils\dmhash.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\utils\dmlogger.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\utils\dmprobabilityutil.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\utils\dmrandom.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\utils\dmrefarray.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\utils\dmstringutil.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\utils\dmtime.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\utils\dmvector.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\utils\dmzonehelper.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\utils\private\dmrefarray_p.cpp">
+      <Filter>utils\private</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dmengine\graphics\dmsize.cpp">
+      <Filter>graphics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="..\dmengine\public\dmflag.h">
+      <Filter>public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\public\dmglobal.h">
+      <Filter>public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\public\dmmath.h">
+      <Filter>public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\public\dmnamespace.h">
+      <Filter>public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\public\dmpublic.h">
+      <Filter>public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\public\dmrefcount.h">
+      <Filter>public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\public\dmrefptr.h">
+      <Filter>public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\public\dmsingleton.h">
+      <Filter>public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\public\dmtypeinfo.h">
+      <Filter>public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\graphics\dmcircle.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\graphics\dmdirection.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\graphics\dmgraphicsmath.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\graphics\dmline.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\graphics\dmpoint.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\graphics\dmpointf.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\graphics\dmrect.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\dmapplication.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\dmatomicint.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\dmautoreleasemgr.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\dmcoreapplication.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\dmevent.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\dmeventfilter.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\dmgraphicsitem.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\dmgraphicsobject.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\dmliveobject.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\dmmalloc.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\dmobject.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\dmobserver.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\dmtimer.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\arch\dmatomicint_arch.h">
+      <Filter>core\arch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\arch\dmatomicint_no.h">
+      <Filter>core\arch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\arch\arm\dmatomicint_arm.h">
+      <Filter>core\arch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\arch\i386\dmatomicint_i386.h">
+      <Filter>core\arch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\arch\ia_64\dmatomicint_ia64.h">
+      <Filter>core\arch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\arch\win\dmatomicint_win.h">
+      <Filter>core\arch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\private\dmliveobject_p.h">
+      <Filter>core\private</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\events\dmpaintevent.h">
+      <Filter>core\events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\thread\dmmutex.h">
+      <Filter>core\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\thread\dmsinglelock.h">
+      <Filter>core\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\thread\dmthread.h">
+      <Filter>core\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\thread\unix\dmmutex_pthread.h">
+      <Filter>core\thread\arch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\core\thread\win\dmmutex_win.h">
+      <Filter>core\thread\arch</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\dmbytebuffer.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\dmcollision.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\dmdebug.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\dmdict.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\dmgraphicsutils.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\dmhash.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\dmlog.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\dmlogger.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\dmprobabilityutil.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\dmrandom.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\dmrefarray.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\dmstringutil.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\dmtime.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\dmvector.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\dmzonehelper.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\utils\private\dmrefarray_p.h">
+      <Filter>utils\private</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dmengine\graphics\dmsize.h">
+      <Filter>graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,559 @@
+/*
+   Copyright (C) 2012-2013 Xiongfa Li
+   All rights reserved.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+*/
+#ifndef DMRECT_H
+#define DMRECT_H
+
+#include "dmpoint.h"
+#include "dmnamespace.h"
+
+DM_BEGIN_NAMESPACE
+class DM_DECL_EXPORT Rect
+{
+public:
+    Rect():
+        m_x1(0),
+        m_y1(0),
+        m_x2(0),
+        m_y2(0)
+    {
+    }
+
+    Rect(dint32 nX, dint32 nY, dint32 nWidth, dint32 nHeight)
+    {
+        set(nX, nY, nWidth, nHeight);
+    }
+
+    Rect(const Rect& other):
+        m_x1(other.m_x1),
+        m_y1(other.m_y1),
+        m_x2(other.m_x2),
+        m_y2(other.m_y2)
+    {
+    }
+
+    dint32 x() const { return m_x1; }
+    dint32 y() const { return m_y1; }
+    dint32 width() const { return (m_x2 - m_x1); }
+    dint32 height() const { return (m_y2 - m_y1); }
+    dint32 top() const { return m_y1; }
+    dint32 bottom() const { return m_y2; }
+    dint32 left() const { return m_x1; }
+    dint32 right() const { return m_x2; }
+
+    Point center() const;
+    Point topLeft() const;
+    Point topRight() const;
+    Point bottomLeft() const;
+    Point bottomRight() const;
+
+    void setX(dint32 nX);
+    void setY(dint32 nY);
+    void setWidth(dint32 nWidth);
+    void setHeight(dint32 nHeight);
+    void set(dint32 nX, dint32 nY, dint32 nWidth, dint32 nHeight);
+    void setCenter(const Point &pos);
+
+    dbool contains(dint32 nX, dint32 nY, dbool proper = false) const;
+    dbool contains(const Point &point, dbool proper = false) const;
+    dbool contains(const Rect &other, dbool proper = false) const;
+
+    dbool intersects(const Rect& other) const;
+    Rect intersected(const Rect &other) const;
+
+    dbool isEmpty();
+    void clean();
+
+    Rect& operator=(const Rect &other);
+    dbool operator==(const Rect &other) const;
+    dbool operator!=(const Rect &other) const;
+    const Rect operator&(const Rect &other) const;
+
+    friend class RectF;
+private:
+    dint32 m_x1;
+    dint32 m_y1;
+    dint32 m_x2;
+    dint32 m_y2;
+};
+
+inline Point Rect::center()const
+{
+    return Point((m_x1+m_x2)>>1, (m_y1+m_y2)>>1);
+}
+
+inline Point Rect::topLeft()const
+{
+    return Point(m_x1, m_y1);
+}
+
+inline Point Rect::topRight() const
+{
+    return Point(m_x2, m_y1);
+}
+
+inline Point Rect::bottomLeft() const
+{
+    return Point(m_x1, m_y2);
+}
+
+inline Point Rect::bottomRight() const
+{
+    return Point(m_x2, m_y2);
+}
+
+inline void Rect::setX(dint32 nX)
+{
+    m_x2 += (nX - m_x1);
+    m_x1 = nX;
+}
+
+inline void Rect::setY(dint32 nY)
+{
+    m_y2 += (nY - m_y1);
+    m_y1 = nY;
+}
+
+inline void Rect::setWidth(dint32 nWidth)
+{
+    if (nWidth < 0)
+    {
+        m_x2 = m_x1;
+        m_x1 += nWidth;
+    }
+    else
+    {
+        m_x2 = m_x1 + nWidth;
+    }
+}
+
+inline void Rect::setHeight(dint32 nHeight)
+{
+    if (nHeight < 0)
+    {
+        m_y2 = m_y1;
+        m_y1 += nHeight;
+    }
+    else
+    {
+        m_y2 = m_y1 + nHeight;
+    }
+}
+
+inline void Rect::set(dint32 nX, dint32 nY, dint32 nWidth, dint32 nHeight)
+{
+#if 0
+    setX(nX);
+    setY(nY);
+    setWidth(nWidth);
+    setHeight(nHeight);
+#endif
+    if (nWidth >= 0)
+    {
+        m_x1 = nX; m_x2 = nX + nWidth;
+    }
+    else
+    {
+        m_x2 = nX; m_x1 = nX + nWidth;
+    }
+
+    if (nHeight >= 0)
+    {
+        m_y1 = nY; m_y2 = nY + nHeight;
+    }
+    else
+    {
+        m_y2 = nY; m_y1 = nY + nHeight;
+    }
+}
+
+inline void Rect::setCenter(const Point& pos)
+{
+    dint32 w = m_x2 - m_x1;
+    dint32 h = m_y2 - m_y1;
+    m_x1 = pos.x() - (w>>1);
+    m_y1 = pos.y() - (h>>1);
+    m_x2 = m_x1 + w;
+    m_y2 = m_y1 + h;
+}
+
+inline dbool Rect::contains(dint32 nX, dint32 nY, dbool proper/* = false*/) const
+{
+#if 0
+    if (nX >= m_x1 && nX <= m_x2 && nY >= m_y1 && nY <= m_y2)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+#endif
+    if (proper)
+    {
+        if(nX <= m_x1 || nX >= m_x2 || nY <= m_y1 || nY >= m_y2)
+        {
+            return false;
+        }
+    }
+    else
+    {
+        if(nX < m_x1 || nX > m_x2 || nY < m_y1 || nY > m_y2)
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+inline dbool Rect::contains(const Point& point, dbool proper/* = false*/) const
+{
+    return contains(point.x(), point.y(), proper);
+}
+
+inline dbool Rect::contains(const Rect& other, dbool proper/* = false*/) const
+{
+    if (proper)
+    {
+        if (other.m_x1 <= m_x1 || other.m_x2 >= m_x2)
+            return false;
+    }
+    else
+    {
+        if (other.m_x1 < m_x1 || other.m_x2 > m_x2)
+            return false;
+    }
+
+    if (proper)
+    {
+        if (other.m_y1 <= m_y1 || other.m_y2 >= m_y2)
+            return false;
+    }
+    else
+    {
+        if (other.m_y1 < m_y1 || other.m_y2 > m_y2)
+            return false;
+    }
+
+    return true;
+}
+
+inline dbool Rect::intersects(const Rect& other) const
+{
+    if (m_x1 > other.m_x2 || m_x2 < other.m_x1)
+    {
+        return false;
+    }
+
+    if (m_y1 > other.m_y2 || m_y2 < other.m_y1)
+    {
+        return false;
+    }
+
+    return true;
+}
+
+inline Rect Rect::intersected(const Rect& other) const
+{
+    if (m_x1 > other.m_x2 || m_x2 < other.m_x1)
+    {
+        return Rect();
+    }
+
+    if (m_y1 > other.m_y2 || m_y2 < other.m_y1)
+    {
+        return Rect();
+    }
+
+    Rect tmp;
+    tmp.m_x1 = Max(m_x1, other.m_x1);
+    tmp.m_y1 = Max(m_y1, other.m_y1);
+    tmp.m_x2 = Min(m_x2, other.m_x2);
+    tmp.m_y2 = Min(m_y2, other.m_y2);
+
+    return tmp;
+}
+
+inline dbool Rect::isEmpty()
+{
+    if ((m_x2-m_x1)!=0 || (m_y2-m_y1)!=0)
+        return false;
+    else
+        return true;
+}
+
+inline void Rect::clean()
+{
+    m_x1 = 0;
+    m_y1 = 0;
+    m_x2 = 0;
+    m_y2 = 0;
+}
+
+inline Rect& Rect::operator=(const Rect& other)
+{
+    m_x1 = other.m_x1;
+    m_y1 = other.m_y1;
+    m_x2 = other.m_x2;
+    m_y2 = other.m_y2;
+
+    return (*this);
+}
+
+inline dbool Rect::operator==(const Rect& other) const
+{
+    if (m_x1 == other.m_x1 &&           \
+        m_y1 == other.m_y1 &&           \
+        m_x2 == other.m_x2 &&           \
+        m_y2 == other.m_y2              \
+    )
+        return true;
+    else
+        return false;
+}
+
+inline dbool Rect::operator!=(const Rect& other) const
+{
+    return (!(*this == other));
+}
+
+inline const Rect Rect::operator&(const Rect& other) const
+{
+    return intersected(other);
+}
+
+class DM_DECL_EXPORT RectF
+{
+public:
+    RectF():
+        m_x(0),
+        m_y(0),
+        m_w(0),
+        m_h(0)
+    {
+    }
+
+    RectF(dreal rX, dreal rY, dreal rWidth, dreal rHeight)
+    {
+        set(rX, rY, rWidth, rHeight);
+    }
+
+    RectF(const Rect& other)
+    {
+        set(static_cast<dreal>(other.m_x1), \
+            static_cast<dreal>(other.m_y1), \
+            static_cast<dreal>(other.width()), \
+            static_cast<dreal>(other.height()));
+    }
+
+    RectF(const RectF& other):
+        m_x(other.m_x),
+        m_y(other.m_y),
+        m_w(other.m_w),
+        m_h(other.m_h)
+    {
+    }
+
+    dreal x() const;
+    dreal y() const;
+    dreal width() const;
+    dreal height() const;
+    dreal top() const;
+    dreal bottom() const;
+    dreal left() const;
+    dreal right() const;
+    dreal halfWidth() const;
+    dreal halfHeight() const;
+
+    PointF center() const;
+    PointF topLeft() const;
+    PointF topRight() const;
+    PointF bottomLeft() const;
+    PointF bottomRight() const;
+
+    void setX(dreal rX);
+    void setY(dreal rY);
+    void setWidth(dreal rWidth);
+    void setHeight(dreal rHeight);
+    void set(dreal rX, dreal rY, dreal rWidth, dreal rHeight);
+    void setCenter(const PointF &pos);
+
+    dbool contains(dreal rX, dreal rY, dbool proper = false) const;
+    dbool contains(const PointF &point, dbool proper = false) const;
+    dbool contains(const RectF &other, dbool proper = false) const;
+
+    dbool intersects(const RectF& other) const;
+    RectF intersected(const RectF &other) const;
+
+    dbool isEmpty();
+    void clean();
+
+    RectF& operator=(const Rect &other);
+    RectF& operator=(const RectF &other);
+    dbool operator==(const RectF &other) const;
+    dbool operator!=(const RectF &other) const;
+    const RectF operator&(const RectF &other) const;
+
+private:
+    dreal m_x; //center x
+    dreal m_y; //center y
+    dreal m_w; //half of width
+    dreal m_h; //half of height
+};
+
+inline dreal RectF::x() const { return m_x - m_w; }
+inline dreal RectF::y() const { return m_y - m_h; }
+inline dreal RectF::width() const { return (m_w*2); }
+inline dreal RectF::height() const { return (m_h*2); }
+inline dreal RectF::top() const { return m_y - m_h; }
+inline dreal RectF::bottom() const { return m_y + m_h; }
+inline dreal RectF::left() const { return m_x - m_w; }
+inline dreal RectF::right() const { return m_x + m_w; }
+inline dreal RectF::halfWidth() const { return m_w; }
+inline dreal RectF::halfHeight() const { return m_h; }
+
+inline PointF RectF::center()const
+{
+    return PointF(m_x, m_y);
+}
+
+inline PointF RectF::topLeft()const
+{
+    return PointF(left(), top());
+}
+
+inline PointF RectF::topRight() const
+{
+    return PointF(right(), top());
+}
+
+inline PointF RectF::bottomLeft() const
+{
+    return PointF(left(), bottom());
+}
+
+inline PointF RectF::bottomRight() const
+{
+    return PointF(right(), bottom());
+}
+
+inline void RectF::setX(dreal rX)
+{
+    m_x = rX + m_w;
+}
+
+inline void RectF::setY(dreal rY)
+{
+    m_y = rY + m_h;
+}
+
+inline void RectF::setWidth(dreal rWidth)
+{
+    m_w = rWidth / 2;
+}
+
+inline void RectF::setHeight(dreal rHeight)
+{
+    m_h = rHeight / 2;
+}
+
+inline void RectF::set(dreal rX, dreal rY, dreal rWidth, dreal rHeight)
+{
+    m_w = rWidth / 2;
+    m_h = rHeight / 2;
+    m_x = rX + m_w;
+    m_y = rY + m_h;
+}
+
+inline void RectF::setCenter(const PointF& pos)
+{
+    m_x = pos.x();
+    m_y = pos.y();
+}
+
+inline dbool RectF::contains(const PointF& point, dbool proper/* = false*/) const
+{
+    return contains(point.x(), point.y(), proper);
+}
+
+inline dbool RectF::isEmpty()
+{
+    if (m_w > DM_FLT_EPSILON || m_h > DM_FLT_EPSILON)
+        return false;
+    else
+        return true;
+}
+
+inline void RectF::clean()
+{
+    m_x = 0;
+    m_y = 0;
+    m_w = 0;
+    m_h = 0;
+}
+
+inline RectF& RectF::operator=(const Rect& other)
+{
+    m_w = static_cast<dreal>((other.width()>>1));
+    m_h = static_cast<dreal>((other.height()>>1));
+    setX(static_cast<dreal>(other.left()));
+    setY(static_cast<dreal>(other.top()));
+
+    return (*this);
+}
+
+
+inline RectF& RectF::operator=(const RectF& other)
+{
+    m_x = other.m_x;
+    m_y = other.m_y;
+    m_w = other.m_w;
+    m_h = other.m_h;
+
+    return (*this);
+}
+
+inline dbool RectF::operator==(const RectF& other) const
+{
+    if (IsEqual(m_x, other.m_x) &&           \
+        IsEqual(m_y, other.m_y) &&           \
+        IsEqual(m_w, other.m_w) &&           \
+        IsEqual(m_h, other.m_h)              \
+    )
+        return true;
+    else
+        return false;
+}
+
+inline dbool RectF::operator!=(const RectF& other) const
+{
+    return (!(*this == other));
+}
+
+inline const RectF RectF::operator&(const RectF& other) const
+{
+    return intersected(other);
+}
+
+template<class A, class B>
+A convertRect(const B &b)
+{
+    return A(b.x(), b.y(), b.width(), b.height());
+}
+
+DM_END_NAMESPACE
+#endif // DMRECT_H
