@@ -29,6 +29,7 @@ struct DM_DLL_EXPORT ClassLoaderData
         duint32 sharable : 1;
         LibraryLoader*      loader;
         DmLibraryClass* classinfo;
+        UrlString path;
     };
 
     ClassLoaderData();

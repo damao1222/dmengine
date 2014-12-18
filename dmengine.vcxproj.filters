@@ -326,6 +326,12 @@
     <ClCompile Include="dmengine\network\http\dmhttprequest.cpp">
       <Filter>network\http</Filter>
     </ClCompile>
+    <ClCompile Include="dmengine\utils\dmdatetime.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="dmengine\utils\plugin\dmlibraryloadercache.cpp">
+      <Filter>utils\plugin</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dmengine\core\dmapplication.h">
@@ -723,6 +729,15 @@
     </ClInclude>
     <ClInclude Include="dmengine\network\http\dmhttprequest.h">
       <Filter>network\http</Filter>
+    </ClInclude>
+    <ClInclude Include="dmengine\utils\dmdatetime.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="dmengine\public\dmshareddata.h">
+      <Filter>public</Filter>
+    </ClInclude>
+    <ClInclude Include="dmengine\utils\plugin\dmlibraryloadercache.h">
+      <Filter>utils\plugin</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

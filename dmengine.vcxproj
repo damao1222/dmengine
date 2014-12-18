@@ -134,6 +134,7 @@
     <ClCompile Include="dmengine\utils\dmcharsetconverter.cpp" />
     <ClCompile Include="dmengine\utils\dmcollision.cpp" />
     <ClCompile Include="dmengine\utils\dmdatabuffer.cpp" />
+    <ClCompile Include="dmengine\utils\dmdatetime.cpp" />
     <ClCompile Include="dmengine\utils\dmendtime.cpp" />
     <ClCompile Include="dmengine\utils\dmeventhandler.cpp" />
     <ClCompile Include="dmengine\utils\dmgraphicsutils.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="dmengine\utils\plugin\dmclassloader.cpp" />
     <ClCompile Include="dmengine\utils\plugin\dmlibrary.cpp" />
     <ClCompile Include="dmengine\utils\plugin\dmlibraryloader.cpp" />
+    <ClCompile Include="dmengine\utils\plugin\dmlibraryloadercache.cpp" />
     <ClCompile Include="dmengine\utils\plugin\private\dmdllloader_win.cpp" />
     <ClCompile Include="dmengine\utils\private\dmrefarray_p.cpp" />
     <ClCompile Include="dmengine\utils\private\dmutilstring_p.cpp" />
@@ -245,6 +247,7 @@
     <ClInclude Include="dmengine\public\dmpublic.h" />
     <ClInclude Include="dmengine\public\dmrefcount.h" />
     <ClInclude Include="dmengine\public\dmrefptr.h" />
+    <ClInclude Include="dmengine\public\dmshareddata.h" />
     <ClInclude Include="dmengine\public\dmsingleton.h" />
     <ClInclude Include="dmengine\public\dmtypeinfo.h" />
     <ClInclude Include="dmengine\utils\dmbuiltin.h" />
@@ -252,6 +255,7 @@
     <ClInclude Include="dmengine\utils\dmcharsetconverter.h" />
     <ClInclude Include="dmengine\utils\dmcollision.h" />
     <ClInclude Include="dmengine\utils\dmdatabuffer.h" />
+    <ClInclude Include="dmengine\utils\dmdatetime.h" />
     <ClInclude Include="dmengine\utils\dmdebug.h" />
     <ClInclude Include="dmengine\utils\dmdict.h" />
     <ClInclude Include="dmengine\utils\dmendtime.h" />
@@ -280,6 +284,7 @@
     <ClInclude Include="dmengine\utils\plugin\dmlibrary.h" />
     <ClInclude Include="dmengine\utils\plugin\dmlibrarydef.h" />
     <ClInclude Include="dmengine\utils\plugin\dmlibraryloader.h" />
+    <ClInclude Include="dmengine\utils\plugin\dmlibraryloadercache.h" />
     <ClInclude Include="dmengine\utils\plugin\private\dmclassloader_p.h" />
     <ClInclude Include="dmengine\utils\plugin\private\dmdllloader_win.h" />
     <ClInclude Include="dmengine\utils\plugin\private\dmlibrary_p.h" />

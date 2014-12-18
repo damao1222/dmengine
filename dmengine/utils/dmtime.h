@@ -16,34 +16,7 @@
 */
 #ifndef DMTIME_H
 #define DMTIME_H
-#include "dmnamespace.h"
-DM_BEGIN_NAMESPACE
-class DM_DLL_EXPORT Time
-{
-public:
-    /** 
-     * 获得当前秒
-     * @return 秒数
-     */
-    static duint getSecond();
 
-    /** 
-     * 获得当前毫秒数
-     * @return 毫秒数
-     */
-    static duint getMillisecond();
+#include "dmdatetime.h"
 
-    /** 
-     * 获得当前微秒数
-     * @return 微秒数
-     */
-    static duint getMicrosecond();
-
-    /** 
-     * 获得应用运行的总时间（第一次调用此接口时开始计算，单位毫秒）
-     * @return 毫秒数
-     */
-    static duint getAppClockMillis();
-};
-DM_END_NAMESPACE
 #endif // DMTIME_H

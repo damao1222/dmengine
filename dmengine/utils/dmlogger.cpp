@@ -66,11 +66,11 @@ enum{
 
 #ifdef DM_OS_ANDROID
 #include <android/log.h>
-int android_printf(const char *format, ...)
+int android_printf(int level, const char *format, ...)
 {
     va_list args;
     va_start(args, format);
-    int result = __android_log_vprint(ANDROID_LOG_VERBOSE, "DMDebug", format, args);
+    int result = __android_log_vprint(level, "DMDebug", format, args);
     va_end(args);
     //return result;
 }
@@ -150,7 +150,7 @@ void Logger::log(LogLevel loglevel, const char *format, ... )
 #ifdef DM_CC_MSVC
         sprintf_s(Msg, prefixFormat, levelNames[loglevel]);
 #else
-        snprintf(Msg, 7, prefixFormat, levelNames[loglevel]);
+        snprintf(Msg, 13, prefixFormat, levelNames[loglevel]);
 #endif
         va_list ArgPtr;
         va_start(ArgPtr,format);
@@ -166,7 +166,12 @@ void Logger::log(LogLevel loglevel, const char *format, ... )
         pdm->outputDebugString(Msg);
 
 #if defined(DM_OS_ANDROID) && defined(DM_DEBUG)
-        android_printf("%s", Msg);
+        int andLv = ANDROID_LOG_VERBOSE;
+        if (loglevel == LOGWARNING)
+            andLv = ANDROID_LOG_WARN;
+        else if (loglevel > LOGSEVERE)
+            andLv = ANDROID_LOG_ERROR;
+        android_printf(andLv, "%s", Msg);
 #endif
 
 #endif
@@ -227,7 +232,7 @@ void LoggerPrivate::outputDebugString(const UtilString &line)
     }
     OutputDebugStringA("\n");
 #else
-    fprintf(stderr, "%s"DM_LINE_ENDING, line.toCharStr());
+    fprintf(stderr, "%s", line.toCharStr());
     fflush(stderr);
 #endif // TARGET_WINDOWS
 #endif

@@ -79,15 +79,15 @@ void Application::init()
 
 void Application::init(const AppConfig &config)
 {
+    static dbool _g_inited = false;
+    DM_ASSERT_X(!_g_inited, "Application only can initial once");
+    _g_inited = true;
 	//init logger
 	Logger::getInstance();
-
-    DM_ASSERT_X(self == NULL, "Application cannot init twice");
 
     d_func()->config = config;
     d_func()->delta = config.frameDelta;
 
-    self = this;
     AutoReleaseManager::getInstance();
 
     //是否启动广播线程
@@ -175,6 +175,25 @@ dbool Application::sendBroadcast(const UtilString &filter, const Variant &msg)
 dbool Application::sendBroadcast(const BroadcastFilter &filter, const Variant &msg)
 {
     return Broadcast::sendBroadcast(filter, msg);
+}
+
+Application* Application::getInstance()
+{
+    if (self == NULL)
+    {
+        self = new Application;
+    }
+    return (Application*)self;
+}
+
+Application* Application::instance()
+{
+    return (Application*)self;
+}
+
+void Application::releaseInstance()
+{
+    DM_SAFE_DELETE(self);
 }
 
 void Application::onframeMove(float dt)

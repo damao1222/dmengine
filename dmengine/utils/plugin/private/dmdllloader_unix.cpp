@@ -57,7 +57,7 @@ dbool DllLoaderUnix::load()
 #endif
     if (!pdm->dllHandle)
     {
-        DM_LOGW("Unable to load %s, reason: %s", strFileName.c_str(), dlerror());
+        DM_LOGW("Unable to load %s, reason: %s", strFileName.toCharStr(), dlerror());
         return false;
     }
     return true;

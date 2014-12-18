@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2012-2014 Xiongfa Li, <damao1222@live.com>
+   Copyright (C) 2012-2014 Xiongfa Li
    All rights reserved.
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,13 +15,19 @@
    limitations under the License.
 */
 
-#ifndef DMTHREAD_PTHREAD_H
-#define DMTHREAD_PTHREAD_H
-#include "pthread.h"
-#define PTHREAD_CANCEL_DISABLE 1
-#define PTHREAD_CANCEL_ENABLE 2
-#define PTHREAD_INHERIT_SCHED 3
-typedef pthread_t ThreadIdentifier;
-typedef int THREADFUNC;
-#define DM_INVALID_THREADID 0
-#endif // DMTHREAD_PTHREAD_H
+#ifndef DMHTTP_TEST_H
+#define DMHTTP_TEST_H
+
+#include "dmtest.h"
+
+DM_BEGIN_NAMESPACE
+class DM_DLL_EXPORT HttpTest : public Test
+{
+public:
+    virtual dbool init();
+    virtual void cleanup();
+
+    virtual void run();
+};
+DM_END_NAMESPACE
+#endif // DMHTTP_TEST_H

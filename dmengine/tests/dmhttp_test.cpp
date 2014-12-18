@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2012-2014 Xiongfa Li, <damao1222@live.com>
+   Copyright (C) 2012-2014 Xiongfa Li
    All rights reserved.
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,13 +15,30 @@
    limitations under the License.
 */
 
-#ifndef DMTHREAD_PTHREAD_H
-#define DMTHREAD_PTHREAD_H
-#include "pthread.h"
-#define PTHREAD_CANCEL_DISABLE 1
-#define PTHREAD_CANCEL_ENABLE 2
-#define PTHREAD_INHERIT_SCHED 3
-typedef pthread_t ThreadIdentifier;
-typedef int THREADFUNC;
-#define DM_INVALID_THREADID 0
-#endif // DMTHREAD_PTHREAD_H
+#include "dmhttp_test.h"
+#include "http/dmhttpclient.h"
+#include "http/dmhttprequest.h"
+
+DM_BEGIN_NAMESPACE
+
+dbool HttpTest::init()
+{
+   return true;
+}
+
+void HttpTest::cleanup()
+{
+
+}
+
+void HttpTest::run()
+{
+	const char* path = "http://img.smart-tv.cn/images/group1/M00/06/87/OtwFbVR0NCOAQ9LjAAACz_9TNeY55.json";
+    HttpRequest *request = new HttpRequest;
+    request->setUrl(path);
+    dmHttpClient.get(request);
+    const char *data = request->getResponseData()->data();
+    delete request;
+}
+DM_END_NAMESPACE
+

@@ -19,6 +19,7 @@
 #include "dmrefcount.h"
 #include "dmhash.h"
 #include "dmlogger.h"
+#include "dmlibraryloadercache.h"
 
 DM_BEGIN_NAMESPACE
 
@@ -70,8 +71,9 @@ void ClassLoaderData::init(const UrlString &libraryFile)
         d = new Data;
         d->ref = 1;
         d->sharable = true;
-        d->loader = LibraryLoaderFactory::create(libraryFile);
+        d->loader = NULL;
         d->classinfo = NULL;
+        d->path = libraryFile;
         
         g_classLoaderDataCache.data.insert(libraryFile, d);
     }
@@ -88,7 +90,8 @@ dbool ClassLoaderData::load()
     if (d->classinfo)
         return true;
 
-    if (d->loader->load())
+    d->loader = dmLibLoaderCache.loadLibrary(d->path);
+    if (d->loader)
     {
         void* ptr = NULL;
         dint ret = d->loader->resolveExport(DM_LIBRARY_CLAZZ_INFO, &ptr);
@@ -186,9 +189,10 @@ void ClassLoaderData::exchange(Data *data)
 void ClassLoaderData::clean(Data *data)
 {
     g_classLoaderDataCache.data.remove(data->loader->getFullPath());
-    data->loader->unload();
+    dmLibLoaderCache.unloadLibrary(data->loader);
     data->classinfo = NULL;
-    DM_SAFE_DELETE(data->loader);
+    //library loader is manage by LibraryLoaderCache
+    //DM_SAFE_DELETE(data->loader);
     DM_SAFE_DELETE(data);
 }
 

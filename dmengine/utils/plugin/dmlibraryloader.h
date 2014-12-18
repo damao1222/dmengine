@@ -83,20 +83,6 @@ public:
      */
     UrlString getDir() const; // 
 };
-
-/** 
- * @brief 获得一个LibraryLoader实例.
- */
-class DM_DLL_EXPORT LibraryLoaderFactory
-{
-public:
-    /** 
-     * 创建LibraryLoader
-     * @param libraryFile  库路径
-     * @return LibraryLoader实例
-     */
-    static LibraryLoader* create(const UrlString &libraryFile);
-};
 DM_END_NAMESPACE
 
 #endif // DMLIBRARYLOADER_H

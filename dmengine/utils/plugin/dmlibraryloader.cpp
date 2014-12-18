@@ -15,11 +15,6 @@
    limitations under the License.
 */
 #include "dmlibraryloader.h"
-#if defined (DM_OS_WIN)
-#include "private/dmdllloader_win.h"
-#elif defined (DM_OS_LINUX)
-#include "private/dmdllloader_unix.h"
-#endif
 
 DM_BEGIN_NAMESPACE
 
@@ -57,14 +52,5 @@ const UrlString & LibraryLoader::getFullPath() const
 UrlString LibraryLoader::getDir() const
 {
     return pdm->fileName.subStr(0, pdm->namePos);
-}
-
-LibraryLoader* LibraryLoaderFactory::create(const UrlString &libraryFile)
-{
-#if defined (DM_OS_WIN)
-    return new DllLoaderWin(libraryFile);
-#elif defined (DM_OS_LINUX)
-    return new DllLoaderUnix(libraryFile);
-#endif
 }
 DM_END_NAMESPACE

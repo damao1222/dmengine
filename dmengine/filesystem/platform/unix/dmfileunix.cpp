@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2012-2013 Xiongfa Li
+   Copyright (C) 2012-2014 Xiongfa Li, <damao1222@live.com>
    All rights reserved.
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -203,11 +203,11 @@ dbool FileUnix::open(EOpenMode eMode)
         mode  |= S_IWUSR;
         break;
     case eO_OverWrite:
-        flags |= O_TRUNC;
+        flags = O_RDWR | O_TRUNC;
         mode  |= S_IWUSR;
         break;
     case eO_ForceWrite:
-        flags = O_CREAT | O_TRUNC;
+        flags = O_RDWR | O_CREAT | O_TRUNC;
         mode  |= S_IWUSR;
         break;
     default:
@@ -337,7 +337,7 @@ dint64 FileUnix::getLength() const
         if (::fstat64(pdm->fileHandle, &fileStat) == 0)
             pdm->size = fileStat.st_size;
         else
-            DM_LOGW("CHDFile::GetLength - GetFileSizeEx failed with error %d", GetLastError());
+            DM_LOGW("FileUnix::getLength - GetFileSizeEx failed with error");
     }
     return pdm->size;
 }
@@ -370,10 +370,10 @@ dbool FileUnix::remove(const UrlString& url)
 
     if (errno == EACCES)
     {
-        DM_LOGW("%s - cant delete file, trying to change mode <%s>", __FUNCTION__, lpFileName);
+        DM_LOGW("cant delete file, trying to change mode <%s>", path.toCharStr());
         if (chmod(path.toCharStr(), 0600) != 0)
         {
-            DM_LOGW("%s - failed to change mode <%s>", __FUNCTION__, lpFileName);
+            DM_LOGW("failed to change mode <%s>", path.toCharStr());
             return 0;
         }
 

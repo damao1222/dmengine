@@ -19,6 +19,7 @@
 
 #include "dmvariant.h"
 #include "dmdatabuffer.h"
+#include "dmutilstring.h"
 
 DM_BEGIN_NAMESPACE
 DM_PRIVATE_CLASS(JsonReader);
@@ -42,6 +43,13 @@ public:
      * @return 成功返回true，失败返回false
      */
     dbool parse(const char *fileName);
+
+    /** 
+     * 解析文件
+     * @param fileName  文件路径
+     * @return 成功返回true，失败返回false
+     */
+    dbool parse(const UrlString &fileName);
 
 	/** 
      * 解析内存json数据

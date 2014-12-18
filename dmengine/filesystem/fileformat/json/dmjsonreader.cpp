@@ -16,7 +16,6 @@
 */
 
 #include "dmjsonreader.h"
-#include "dmutilstring.h"
 #include "dmfile.h"
 
 DM_BEGIN_NAMESPACE
@@ -639,6 +638,11 @@ JsonReader::~JsonReader()
 }
 
 dbool JsonReader::parse(const char *fileName)
+{
+    return parse(UrlString(fileName));
+}
+
+dbool JsonReader::parse(const UrlString &fileName)
 {
     dbool ret = false;
 

@@ -18,23 +18,26 @@
 #include "dmlibrary.h"
 #include "private/dmlibrary_p.h"
 #include "dmlibraryloader.h"
+#include "dmlibraryloadercache.h"
 #include "dmlibrarydef.h"
 
 DM_BEGIN_NAMESPACE
 class LibraryDataPrivate
 {
 public:
-    LibraryLoader*      loader;
-    void*               clazz;
-    dm_create_clazz_t*     createFunc;
-    dm_destroy_clazz_t*    destroyFunc;
-    dm_version_clazz_t*    versionFunc;
+    UrlString                        libPath;
+    LibraryLoader*              loader;
+    void*                               clazz;
+    dm_create_clazz_t*       createFunc;
+    dm_destroy_clazz_t*     destroyFunc;
+    dm_version_clazz_t*     versionFunc;
 };
 
 LibraryData::LibraryData(const char *path):
     C_D(LibraryData)
 {
-    pdm->loader = LibraryLoaderFactory::create(path);
+    pdm->libPath = path;
+    pdm->loader = NULL;
     pdm->clazz = NULL;
     pdm->createFunc = NULL;
     pdm->destroyFunc = NULL;
@@ -51,7 +54,10 @@ dbool LibraryData::load()
     if (pdm->clazz)
         return true;
 
-    if (pdm->loader->load())
+    if (!pdm->loader)
+        pdm->loader = dmLibLoaderCache.loadLibrary(pdm->libPath);
+
+    if (pdm->loader)
     {
         dbool loadRet = false;
         void* ptr = NULL;
@@ -98,7 +104,7 @@ void LibraryData::unload()
         pdm->clazz = NULL;
     }
 
-    pdm->loader->unload();
+    dmLibLoaderCache.unloadLibrary(pdm->loader);
 }
 
 dint LibraryData::version() const

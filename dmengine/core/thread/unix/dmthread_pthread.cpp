@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2012-2013 Xiongfa Li
+   Copyright (C) 2012-2014 Xiongfa Li, <damao1222@live.com>
    All rights reserved.
 
    Licensed under the Apache License, Version 2.0 (the "License");

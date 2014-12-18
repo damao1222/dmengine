@@ -31,9 +31,7 @@ class LiveObject;
 class AppConfig;
 class DisplayLayer;
 DM_PRIVATE_CLASS(Application);
-class DM_DLL_EXPORT Application: public CoreApplication,
-                                 public TouchDispatcher,
-                                 public Singleton<Application>
+class DM_DLL_EXPORT Application: public CoreApplication, public TouchDispatcher
 {
     DM_DECLARE_PRIVATE_N(Application)
 public:
@@ -120,6 +118,23 @@ public:
      */
     dbool sendBroadcast(const BroadcastFilter &filter, const Variant &msg);
 
+    /** 
+     * 获得Application的单例，如果没有则创建
+     * @return 单例
+     */
+    static Application* getInstance();
+
+    /** 
+     * 获得Application的单例，如果没有则返回NULL
+     * @return 单例
+     */
+    static Application* instance();
+
+    /** 
+     * 释放Application的单例
+     */
+    static void releaseInstance();
+
     void pushDisplayLayer(DisplayLayer *layer);
     void popDisplayLayer();
 
@@ -141,5 +156,5 @@ private:
 
 DM_END_NAMESPACE
 #define g_application DM_GLOBAL_OBJ(DM::Application)
-#define dmApp DM::Application::getInstance()
+#define dmApp (*DM::Application::getInstance())
 #endif // DMAPPLICATION_H
