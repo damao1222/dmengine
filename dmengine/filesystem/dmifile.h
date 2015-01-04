@@ -40,7 +40,7 @@ typedef enum {
   IOCTRL_SEEK_POSSIBLE  = 2, /**< return 0 if known not to work, 1 if it should work */
   IOCTRL_CACHE_STATUS   = 3, /**< SCacheStatus structure */
   IOCTRL_CACHE_SETRATE  = 4, /**< unsigned dint with speed limit for caching in bytes per second */
-  IOCTRL_SET_CACHE      = 8, /** <CFileCache */
+  IOCTRL_SET_CACHE      = 8, /** <FileCache */
 } EIoControl;
 
 typedef enum {
@@ -86,6 +86,7 @@ public:
     virtual dbool remove() { return false; }
     virtual dbool rename(const UrlString& urlnew) { return false; }
     virtual dbool setHidden(dbool hidden) { return false; }
+    virtual dbool copyTo(const UrlString& destUrl) { return false; }
 
     virtual dint ioctl(EIoControl request, void* param) { return -1; }
 

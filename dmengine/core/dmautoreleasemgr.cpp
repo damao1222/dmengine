@@ -18,6 +18,8 @@
 #include "dmautoreleasemgr.h"
 #include "dmrefptr.h"
 #include "dmvector.h"
+#include "thread/dmsinglelock.h"
+#include "dmdllsingleton.h"
 
 DM_BEGIN_NAMESPACE
 typedef Vector<BaseRefPtr*> pool;
@@ -25,7 +27,12 @@ class AutoReleaseManagerPrivate
 {
 public:
     Vector<pool*> pools;
+    Mutex mutex;
+
+    DM_DECLARE_SINGLETON(AutoReleaseManager);
 };
+
+DM_INTERNAL_SINGLETON(AutoReleaseManager)
 
 AutoReleaseManager::AutoReleaseManager():
     C_D(AutoReleaseManager)
@@ -48,6 +55,7 @@ AutoReleaseManager::~AutoReleaseManager()
 
 void AutoReleaseManager::autoRelease(BaseRefPtr *obj)
 {
+    SingleLock lock(&pdm->mutex);
     if (obj->isAutoRelease())
     {
         return ;
@@ -60,6 +68,7 @@ void AutoReleaseManager::autoRelease(BaseRefPtr *obj)
 
 dbool AutoReleaseManager::cancelRelease(BaseRefPtr *obj)
 {
+    SingleLock lock(&pdm->mutex);
     if (!obj->isAutoRelease())
     {
         return false;
@@ -77,6 +86,7 @@ dbool AutoReleaseManager::cancelRelease(BaseRefPtr *obj)
 
 void AutoReleaseManager::releaseAll()
 {
+    SingleLock lock(&pdm->mutex);
     for (int i=0; i<pdm->pools.size(); ++i)
     {
         pool* p = pdm->pools.at(i);
@@ -92,6 +102,7 @@ void AutoReleaseManager::releaseAll()
 
 void AutoReleaseManager::cleanInvalid()
 {
+    SingleLock lock(&pdm->mutex);
     for (int i=0; i<pdm->pools.size(); ++i)
     {
         pool* p = pdm->pools.at(i);
@@ -114,6 +125,7 @@ void AutoReleaseManager::cleanInvalid()
 
 duint32 AutoReleaseManager::managedCount() const
 {
+    SingleLock lock(&pdm->mutex);
     duint32 count = 0;
     for (int i=0; i<pdm->pools.size(); ++i)
     {
@@ -122,5 +134,6 @@ duint32 AutoReleaseManager::managedCount() const
     }
     return count;
 }
+
 DM_END_NAMESPACE
 

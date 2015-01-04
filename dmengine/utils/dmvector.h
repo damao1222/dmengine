@@ -73,6 +73,8 @@ struct DM_DLL_EXPORT VectorData {
     inline void **end() const { return d->array + d->end; }
 };
 
+extern DM_DLL_EXPORT dint AllocMore(dint alloc, dint extra);
+
 template <typename T>
 class Vector
 {

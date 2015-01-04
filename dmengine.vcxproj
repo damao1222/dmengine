@@ -52,17 +52,17 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;DM_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <AdditionalIncludeDirectories>$(ProjectDir)\dmengine\core;$(ProjectDir)\dmengine\graphics;$(ProjectDir)\dmengine\public;$(ProjectDir)\dmengine\utils;$(ProjectDir)\dmengine\filesystem;$(ProjectDir)\dmengine\windowsystem;$(ProjectDir)\dmengine\network;$(ProjectDir)\dmengine\3rdparty;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)\dmengine\core;$(ProjectDir)\dmengine\graphics;$(ProjectDir)\dmengine\public;$(ProjectDir)\dmengine\utils;$(ProjectDir)\dmengine\filesystem;$(ProjectDir)\dmengine\windowsystem;$(ProjectDir)\dmengine\network;$(ProjectDir)\dmengine\3rdparty</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <CompileAsManaged>
       </CompileAsManaged>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>libcurl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>libcurl.lib</AdditionalDependencies>
       <ImportLibrary>$(TargetDir)$(TargetName).lib</ImportLibrary>
       <OutputFile>$(SolutionDir)$(Configuration)\$(TargetName)$(TargetExt)</OutputFile>
-      <AdditionalLibraryDirectories>$(ProjectDir)dmengine\3rdparty\curl\win32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)dmengine\3rdparty\curl\win32\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -239,6 +239,7 @@
     <ClInclude Include="dmengine\network\http\dmhttpclient.h" />
     <ClInclude Include="dmengine\network\http\dmhttprequest.h" />
     <ClInclude Include="dmengine\public\dmcow.h" />
+    <ClInclude Include="dmengine\public\dmdllsingleton.h" />
     <ClInclude Include="dmengine\public\dmflag.h" />
     <ClInclude Include="dmengine\public\dmglobal.h" />
     <ClInclude Include="dmengine\public\dmmacro.h" />

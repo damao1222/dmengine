@@ -182,6 +182,11 @@ dint Date::day() const
     return d;
 }
 
+void Date::get(dint *year, dint *month, dint *day)
+{
+    GetDateFromJulianDay(pdm->jd, year, month, day);
+}
+
 Date& Date::operator=(const Date &other)
 {
     if (this == &other)

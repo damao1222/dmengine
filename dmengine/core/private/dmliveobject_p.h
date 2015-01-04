@@ -58,7 +58,7 @@ public:
     dreal pausetime;
     dreal lastpause;
 
-    //WARNING: __remove is only used by DM::Application, Don't change it's value any way!
+    //WARNING: __remove is only used by Application, Don't change it's value any way!
     duint8 __remove : 1;
     duint8 acceptInput : 1;
     duint8 unused : 6;

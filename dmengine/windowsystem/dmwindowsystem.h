@@ -24,8 +24,7 @@ class TouchEvent;
 class Widget;
 class DisplayLayer;
 DM_PRIVATE_CLASS(WindowSystem);
-class DM_DLL_EXPORT WindowSystem : public Object,
-                                   public Singleton<WindowSystem>
+class DM_DLL_EXPORT WindowSystem : public Object
 {
     DM_DECLARE_PRIVATE(WindowSystem)
 public:
@@ -44,6 +43,23 @@ public:
 
     //internal
     virtual dbool event(Event *e);
+
+    /** 
+     * 获得WindowSystem的单例，如果单例不存在则new一个WindowSystem对象（线程安全）.
+     * @return 返回Logger单例.
+     */
+    static WindowSystem* getInstance();
+
+    /** 
+     * 获得WindowSystem的单例，如果单例存在返回单例指针，否则返回NULL.
+     * @return 返回WindowSystem单例.
+     */
+    static WindowSystem* instance();
+
+    /** 
+     * 释放WindowSystem的单例（线程安全）.
+     */
+    static void releaseInstance();
 };
 
 #define g_windowSystem DM_GLOBAL_OBJ(WindowSystem)

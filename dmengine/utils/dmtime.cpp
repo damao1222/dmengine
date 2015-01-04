@@ -60,7 +60,7 @@ gettimeofday(struct timeval *tp, void *tzp)
 #endif
 #endif
 
-using namespace DM;
+DM_USING_NAMESPACE;
 
 duint32 Time::getSecond()
 {

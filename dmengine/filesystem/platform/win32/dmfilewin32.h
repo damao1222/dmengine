@@ -56,6 +56,7 @@ public:
     virtual dbool remove();
     virtual dbool rename(const UrlString& urlnew);
     virtual dbool setHidden(dbool hidden);
+    virtual dbool copyTo(const UrlString& destUrl);
 
     virtual dint ioctl(EIoControl request, void* param);
 

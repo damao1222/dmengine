@@ -131,6 +131,11 @@ dbool File::setHidden(dbool hidden)
     return FILE_WRAP(setHidden)(hidden);
 }
 
+dbool File::copyTo(const UrlString& destUrl)
+{
+    return FILE_WRAP(copyTo)(destUrl);
+}
+
 dint File::ioctl(EIoControl request, void* param)
 {
     return FILE_WRAP(ioctl)(request, param);
@@ -148,9 +153,9 @@ const UrlString& File::path() const
 
 dbool File::getAllDatas(dbyte *&pBuf, dint64 &uSize)
 {
+    pBuf = NULL; uSize = 0;
     if(seek(0, SEEK_CUR) < 0) 
     {
-        pBuf = NULL; uSize = 0;
         return false;
     }
 
@@ -188,6 +193,38 @@ dbool File::rename(const UrlString& url, const UrlString& urlnew)
 dbool File::setHidden(const UrlString& url, dbool hidden)
 {
     return File(url).setHidden(hidden);
+}
+
+dbool File::copy(const UrlString& srcUrl, const UrlString& destUrl)
+{
+    if (srcUrl.isEmpty() || destUrl.isEmpty())
+        return false;
+
+    File file(srcUrl);
+    if (file.copyTo(destUrl))
+        return true;
+
+    File destFile(destUrl);
+    if (!destFile.open(eO_OverWrite))
+    {
+        return false;
+    }
+
+    dbool bRet = false;
+    if (file.open())
+    {
+        dbyte *pBuf = NULL;
+        dint64 uSize = 0;
+        if (file.getAllDatas(pBuf, uSize))
+        {
+            bRet = destFile.write(pBuf, uSize) > 0;
+            DM_SAFE_DELETE_ARRAY(pBuf);
+        }
+        file.close();
+    }
+
+    destFile.close();
+    return bRet;
 }
 
 DM_END_NAMESPACE

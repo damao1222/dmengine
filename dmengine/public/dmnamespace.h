@@ -109,6 +109,6 @@ public:
 #elif defined(DM_OS_SYMBIAN)
     typedef unsigned long int HANDLE; // equivalent to TUint32
 #endif
-    typedef DM::duint16 WORD;
+    typedef DM_NS::duint16 WORD;
 };
 #endif // DMNAMESPACE_H

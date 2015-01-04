@@ -739,5 +739,8 @@
     <ClInclude Include="dmengine\utils\plugin\dmlibraryloadercache.h">
       <Filter>utils\plugin</Filter>
     </ClInclude>
+    <ClInclude Include="dmengine\public\dmdllsingleton.h">
+      <Filter>public</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

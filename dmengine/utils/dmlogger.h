@@ -20,11 +20,10 @@
 
 #include "dmnamespace.h"
 #include "dmlog.h"
-#include "dmsingleton.h"
 
 DM_BEGIN_NAMESPACE
 DM_PRIVATE_CLASS(Logger);
-class DM_DLL_EXPORT Logger : public Singleton<Logger>
+class DM_DLL_EXPORT Logger
 {
     DM_DECLARE_PRIVATE(Logger)
 public:
@@ -57,6 +56,23 @@ public:
      * @return 调试级别
      */
     LogLevel getLogLevel() const;
+
+    /** 
+     * 获得Logger的单例，如果单例不存在则new一个Logger对象（线程安全）.
+     * @return 返回Logger单例.
+     */
+    static Logger* getInstance();
+
+    /** 
+     * 获得Logger的单例，如果单例存在返回单例指针，否则返回NULL.
+     * @return 返回Logger单例.
+     */
+    static Logger* instance();
+
+    /** 
+     * 释放Logger的单例（线程安全）.
+     */
+    static void releaseInstance();
 };
 DM_END_NAMESPACE
 #endif // DMLOGGER_H

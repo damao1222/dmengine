@@ -20,6 +20,7 @@
 #include "dmhash.h"
 #include "dmlogger.h"
 #include "dmlibraryloadercache.h"
+#include "dmsingleton.h"
 
 DM_BEGIN_NAMESPACE
 

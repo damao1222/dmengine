@@ -26,7 +26,7 @@
             void registProperties() {
 
 #define DM_BIND_PROPERTY(Type, Name, Member) \
-                DM::Object::registMetaData(Name, new DM::MetaDataTemp<Type>(Member))
+                DM_NS::Object::registMetaData(Name, new DM_NS::MetaDataTemp<Type>(Member))
 
 #define DM_BIND_PROPERTY_END \
             }
@@ -43,7 +43,7 @@
                 }
 
 #define DM_REGIST_PROPERTY(Type, Name, Set, Get) \
-                DM::Object::registMetaData(Name, new MetaData##Name(this))
+                DM_NS::Object::registMetaData(Name, new MetaData##Name(this))
 #endif
 
 enum {

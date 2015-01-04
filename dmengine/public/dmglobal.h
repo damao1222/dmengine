@@ -17,6 +17,7 @@
 #ifndef DMGLOBAL_H
 #define DMGLOBAL_H
 #include "dmpublic.h"
+
 #if defined(DM_OS_DARWIN) || !defined(DM_OS_OPENBSD) && defined(_POSIX_THREAD_PRIORITY_SCHEDULING) && (_POSIX_THREAD_PRIORITY_SCHEDULING-0 >= 0)
 #define DM_HAS_THREAD_PRIORITY_SCHEDULING
 #endif
@@ -85,6 +86,9 @@
     Class(const Class &); \
     Class &operator=(const Class &);
 
+#define DM_NS DM
+#define DM_NS_THREAD Threads
+
 #define DM_PROPERTY(VarType, VarName, FunName) \
         protected: VarType VarName;\
             public: VarType get##FunName(void) const { return VarName; }\
@@ -141,13 +145,13 @@
             public: virtual const VarType& get##FunName(void) const;\
             public: virtual void set##FunName(const VarType &var);
 
-#define DM_BEGIN_NAMESPACE namespace DM {
+#define DM_BEGIN_NAMESPACE namespace DM_NS {
 #define DM_END_NAMESPACE }
 
-#define DM_BEGIN_NS_THREAD namespace Threads {
+#define DM_BEGIN_NS_THREAD namespace DM_NS_THREAD {
 #define DM_END_NS_THREAD }
 
-#define DM_USING_NAMESPACE using namespace DM
+#define DM_USING_NAMESPACE using namespace DM_NS
 
 #define DM_GLOBEL_INSTANCE(CLASS, NAME)                     \
                 static CLASS* NAME##_globel_instance = 0;   \
@@ -169,7 +173,7 @@
             for (ITEM=VEC.at(_d_index); _tmp==_d_index; ++_d_index)
 
 #define DM_FOREACH_HASH(ITEM, MAP, KEY, TYPE) \
-        for (DM::Hash<KEY, TYPE>::iterator _i_it=MAP.begin(), _t_it=MAP.begin(); _i_it!=MAP.constEnd(); _t_it=_i_it)\
+        for (DM_NS::Hash<KEY, TYPE>::iterator _i_it=MAP.begin(), _t_it=MAP.begin(); _i_it!=MAP.constEnd(); _t_it=_i_it)\
             for (ITEM=_i_it.value(); _t_it==_i_it; ++_i_it)
 
 inline void dm_noop() {}
@@ -318,11 +322,11 @@ bool remove_compare(void* obj)
 #define DM_LITTLE_ENDIAN 1234
 
 #define DM_GLOBAL_REF(CLASS, NAME) \
-    static DM::Ref<CLASS> NAME##Ref(CLASS::getInstance())
+    static DM_NS::Ref<CLASS> NAME##Ref(CLASS::getInstance())
 
 #define DM_GLOBAL_OBJ(CLASS) (*(CLASS::instance()))
 
-#define DM_GLOBAL_USE(CLASS) (*(DM::Singleton<CLASS>::getInstance()))
+#define DM_GLOBAL_USE(CLASS) (*(DM_NS::Singleton<CLASS>::getInstance()))
 
 #define DM_GLOBAL_MEMBER(CLASS, GetFunc) (*(CLASS::instance()->GetFunc()))
 

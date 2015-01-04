@@ -286,16 +286,16 @@ inline dreal rSqrtFast(dreal x)
  * BUT SinFast, CosFast and rSqrtFast is really faster then sin, cos and rSqrt
  */
 #ifdef DM_USE_FAST_MATH_FUNCTION
-//#define dmSqrt(x) DM::SqrtFast(x)
-#define dmSqrt(x) DM::Sqrt(x)
-#define dmRSqrt(x) DM::rSqrtFast(x)
-#define dmSin(x) DM::SinFast(x)
-#define dmCos(x) DM::CosFast(x)
+//#define dmSqrt(x) DM_NS::SqrtFast(x)
+#define dmSqrt(x) DM_NS::Sqrt(x)
+#define dmRSqrt(x) DM_NS::rSqrtFast(x)
+#define dmSin(x) DM_NS::SinFast(x)
+#define dmCos(x) DM_NS::CosFast(x)
 #else
-#define dmSqrt(x) DM::Sqrt(x)
-#define dmRSqrt(x) DM::rSqrt(x)
-#define dmSin(x) DM::Sin(x)
-#define dmCos(x) DM::Cos(x)
+#define dmSqrt(x) DM_NS::Sqrt(x)
+#define dmRSqrt(x) DM_NS::rSqrt(x)
+#define dmSin(x) DM_NS::Sin(x)
+#define dmCos(x) DM_NS::Cos(x)
 #endif
 
 

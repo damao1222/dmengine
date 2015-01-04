@@ -48,8 +48,8 @@ DM_END_NAMESPACE
 
 #define DM_CONNECT(O1, FuncName1, O2Type, O2, FuncName2)    \
         do { \
-            DM::ObjectCBData d; \
-            d.func = (DM::CallFunc)(&O2Type##::##FuncName2);\
+            DM_NS::ObjectCBData d; \
+            d.func = (DM_NS::CallFunc)(&O2Type##::##FuncName2);\
             d.classPtr = O2; \
             O1->m_object_cb_map.insert(O1->FuncName1##FuncKey(), d);\ 
         } while (0)

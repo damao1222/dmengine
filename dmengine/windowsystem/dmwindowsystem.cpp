@@ -21,6 +21,7 @@
 #include "events/dminputevent.h"
 #include "events/dmwindowevent.h"
 #include "dmdisplaylayer.h"
+#include "dmdllsingleton.h"
 
 DM_BEGIN_NAMESPACE
 class WindowSystemPrivate
@@ -31,7 +32,11 @@ public:
 
     RefArray *arr;
     RefArray *layerArr;
+
+    DM_DECLARE_SINGLETON(WindowSystem);
 };
+
+DM_INTERNAL_SINGLETON(WindowSystem)
 
 void WindowSystemPrivate::addWidget(Widget *w)
 {

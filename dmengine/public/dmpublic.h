@@ -538,7 +538,7 @@
 #  define DM_CC_NOKIAX86
 
 #else
-#  error "DM has not been tested with this compiler - talk to qt-bugs@trolltech.com"
+#  error "I has not been tested with this compiler"
 #endif
 
 

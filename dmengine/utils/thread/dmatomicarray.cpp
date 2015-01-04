@@ -24,15 +24,15 @@ DM_BEGIN_NS_THREAD
 class RefArrayPrivate
 {
 public:
-    DM::RefArray *array;
-    DM::Mutex mutex;
+    DM_NS::RefArray *array;
+    DM_NS::Mutex mutex;
 };
 
 RefArray::RefArray():
     C_D(RefArray)
 {
     SingleLock lock(&pdm->mutex);
-    pdm->array = new DM::RefArray;
+    pdm->array = new DM_NS::RefArray;
 }
 
 RefArray::~RefArray()

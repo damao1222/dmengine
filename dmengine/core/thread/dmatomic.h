@@ -71,7 +71,7 @@ private:
     volatile long &m_lock;
 };
 
-#define DM_SPINLOCK_ACQUIRE(l) while(DM::CAS(&l, 0, 1)) {}
+#define DM_SPINLOCK_ACQUIRE(l) while(DM_NS::CAS(&l, 0, 1)) {}
 #define DM_SPINLOCK_RELEASE(l) l = 0
 
 DM_END_NAMESPACE

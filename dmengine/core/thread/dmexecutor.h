@@ -19,12 +19,11 @@
 #define DMEXECUTOR_H
 
 #include "dmnamespace.h"
-#include "dmsingleton.h"
 
 DM_BEGIN_NAMESPACE
 class ExecTask;
 DM_PRIVATE_CLASS(Executor);
-class DM_DLL_EXPORT Executor : public Singleton<Executor>
+class DM_DLL_EXPORT Executor
 {
     DM_DECLARE_PRIVATE(Executor)
 public:
@@ -108,9 +107,26 @@ public:
      * @param delta  时间间隔.
      */
     void checkTaskTimeout(dreal delta);
+
+    /** 
+     * 获得Executor的单例，如果单例不存在则new一个Executor对象（线程安全）.
+     * @return 返回Executor单例.
+     */
+    static Executor* getInstance();
+
+    /** 
+     * 获得Executor的单例，如果单例存在返回单例指针，否则返回NULL.
+     * @return 返回Executor单例.
+     */
+    static Executor* instance();
+
+    /** 
+     * 释放Executor的单例（线程安全）.
+     */
+    static void releaseInstance();
 };
 DM_END_NAMESPACE
 
-#define dmExecutor DM_GLOBAL_OBJ(DM::Executor)
+#define dmExecutor DM_GLOBAL_OBJ(DM_NS::Executor)
 
 #endif // DMEXECUTOR_H

@@ -55,6 +55,7 @@
 
 #include "thread/dmsinglelock.h"
 #include "dmutilstring.h"
+#include "dmdllsingleton.h"
 DM_BEGIN_NAMESPACE
 //DM_GLOBEL_INSTANCE_QUICK(CriticalSection, Lock)
 //#define Mutex Lock_instance()
@@ -84,7 +85,10 @@ public:
     LogLevel logLevel;
     dint repeatCount;
     Mutex mutex;
+    DM_DECLARE_SINGLETON(Logger);
 };
+
+DM_INTERNAL_SINGLETON(Logger)
 
 Logger::Logger(LogLevel level/* = LOGDEBUG*/):
     C_D(Logger)

@@ -26,6 +26,7 @@
 #include "dmcoreapplication.h"
 #include "dmobject.h"
 #include "dmendtime.h"
+#include "dmdllsingleton.h"
 
 DM_BEGIN_NAMESPACE
 class ExecuteEvent : public Event
@@ -277,11 +278,12 @@ void ExecThread::run()
     }    
 }
 
-class ExecutorPrivate
+class DM_DLL_EXPORT ExecutorPrivate
 {
 public:
     Vector<ExecThread*> threadPool;
     Mutex mutex;
+    DM_DECLARE_SINGLETON(Executor);
 };
 
 Executor::Executor()
@@ -435,5 +437,7 @@ void Executor::checkTaskTimeout(dreal delta)
         thread->checkTaskTimeout();
     }
 }
+
+DM_INTERNAL_SINGLETON(Executor)
 
 DM_END_NAMESPACE

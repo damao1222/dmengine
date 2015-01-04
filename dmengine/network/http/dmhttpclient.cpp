@@ -17,6 +17,7 @@
 #include "dmhttpclient.h"
 #include "curl/dmcurl.h"
 #include "dmhttprequest.h"
+#include "dmdllsingleton.h"
 
 DM_BEGIN_NAMESPACE
 
@@ -37,7 +38,10 @@ class HttpClientPrivate
 {
 public:
     dint config(HttpRequest *request, CURL* curl);
+    DM_DECLARE_SINGLETON(HttpClient);
 };
+
+DM_INTERNAL_SINGLETON(HttpClient)
 
 dint HttpClientPrivate::config(HttpRequest *request, CURL* curl)
 {

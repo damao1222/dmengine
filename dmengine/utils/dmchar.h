@@ -28,7 +28,7 @@ DM_BEGIN_NAMESPACE
 	typedef char strchar;
 #endif
 
-class DM_DECL_EXPORT Char
+class DM_DLL_EXPORT Char
 {
 public:
 	Char();

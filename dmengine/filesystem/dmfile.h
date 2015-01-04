@@ -159,6 +159,13 @@ public:
     dbool setHidden(dbool hidden);
 
     /** 
+     * 拷贝文件
+     * @param destUrl 拷贝目标地址
+     * @return 成功返回true，失败返回false
+     */
+    dbool copyTo(const UrlString& destUrl);
+
+    /** 
      * IO控制
      * @param request 请求
      * @param param 参数
@@ -215,6 +222,14 @@ public:
      * @return 成功返回true，否则返回false
      */
     static dbool setHidden(const UrlString& url, dbool hidden);
+
+    /** 
+     * 拷贝文件
+     * @param srcUrl 源文件路径
+     * @param destUrl 拷贝文件路径
+     * @return 成功返回true，否则返回false
+     */
+    static dbool copy(const UrlString& srcUrl, const UrlString& destUrl);
 };
 DM_END_NAMESPACE
 

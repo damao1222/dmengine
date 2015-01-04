@@ -17,43 +17,58 @@
 #ifndef DMLIBRARYLOADERCACHE_H
 #define DMLIBRARYLOADERCACHE_H
 
-#include "dmsingleton.h"
 #include "dmutilstring.h"
 
 DM_BEGIN_NAMESPACE
 class LibraryLoader;
 DM_PRIVATE_CLASS(LibraryLoaderCache);
-class DM_DLL_EXPORT LibraryLoaderCache : public Singleton<LibraryLoaderCache>
+class DM_DLL_EXPORT LibraryLoaderCache
 {
     DM_DECLARE_PRIVATE(LibraryLoaderCache)
 public:
     /** 
-     * 装载一个动态库.
+     * 装载一个动态库（线程安全）.
      * @param libraryFile  动态库路径.
      * @return 装载成功返回装载后的loader，否则返回空.
      */
     LibraryLoader* loadLibrary(const UrlString &libraryFile);
 
     /** 
-     *  卸载一个动态库.
+     *  卸载一个动态库（线程安全）.
      * @param libraryFile  动态库路径.
      * @return 成功返回true，失败返回false
      */
     dbool unloadLibrary(const UrlString &libraryFile);
 
     /** 
-     *  卸载一个动态库.
+     *  卸载一个动态库（线程安全）.
      * @param loader  装载动态库的loader.
      * @return 成功返回true，失败返回false
      */
     dbool unloadLibrary(LibraryLoader *loader);
 
     /** 
-     * 获得所有缓存的动态库路径
+     * 获得所有缓存的动态库路径（线程安全）.
      * @return 路径列表
      */
     UrlStringList cachedLibs() const;
 
+    /** 
+     * 获得LibraryLoaderCache的单例，如果单例不存在则new一个LibraryLoaderCache对象（线程安全）.
+     * @return 返回LibraryLoaderCache单例.
+     */
+    static LibraryLoaderCache* getInstance();
+
+    /** 
+     * 获得LibraryLoaderCache的单例，如果单例存在返回单例指针，否则返回NULL.
+     * @return 返回LibraryLoaderCache单例.
+     */
+    static LibraryLoaderCache* instance();
+
+    /** 
+     * 释放LibraryLoaderCache的单例（线程安全）.
+     */
+    static void releaseInstance();
 private:
     /** 
      * 构造函数
@@ -66,7 +81,7 @@ private:
     ~LibraryLoaderCache();
 
     //internal
-    friend class Singleton<LibraryLoaderCache>;
+    friend class LibraryLoaderCache;
  };
 
 /** 
@@ -84,6 +99,6 @@ public:
 };
 DM_END_NAMESPACE
 
-#define dmLibLoaderCache (*DM::LibraryLoaderCache::getInstance())
+#define dmLibLoaderCache (*DM_NS::LibraryLoaderCache::getInstance())
 
 #endif // DMLIBRARYLOADER_H

@@ -23,6 +23,8 @@
 #include "dmhash.h"
 #include "dmrefptr.h"
 #include "dmlogger.h"
+#include "thread/dmsinglelock.h"
+#include "dmdllsingleton.h"
 
 DM_BEGIN_NAMESPACE
 
@@ -45,7 +47,11 @@ class LibraryLoaderCachePrivate
 {
 public:
     Hash<UrlString, LoaderPtr*> map;
+    Mutex mutex;
+    DM_DECLARE_SINGLETON(LibraryLoaderCache);
 };
+
+DM_INTERNAL_SINGLETON(LibraryLoaderCache)
 
 LibraryLoaderCache::LibraryLoaderCache() :
     C_D(LibraryLoaderCache)
@@ -55,6 +61,7 @@ LibraryLoaderCache::LibraryLoaderCache() :
 
 LibraryLoaderCache::~LibraryLoaderCache()
 {
+    SingleLock lock(&pdm->mutex);
     Hash<UrlString, LoaderPtr*>::Iterator it = pdm->map.begin();
     while (it != pdm->map.constEnd())
     {
@@ -72,6 +79,8 @@ LibraryLoaderCache::~LibraryLoaderCache()
 
 LibraryLoader* LibraryLoaderCache::loadLibrary(const UrlString &libraryFile)
 {
+    SingleLock lock(&pdm->mutex);
+
     if (libraryFile.isEmpty())
         return NULL;
 
@@ -103,6 +112,8 @@ LibraryLoader* LibraryLoaderCache::loadLibrary(const UrlString &libraryFile)
 
 dbool LibraryLoaderCache::unloadLibrary(const UrlString &libraryFile)
 {
+    SingleLock lock(&pdm->mutex);
+
     if (libraryFile.isEmpty())
         return false;
 
@@ -123,6 +134,8 @@ dbool LibraryLoaderCache::unloadLibrary(const UrlString &libraryFile)
 
 dbool LibraryLoaderCache::unloadLibrary(LibraryLoader *loader)
 {
+    SingleLock lock(&pdm->mutex);
+
     if (!loader)
         return false;
 
@@ -162,6 +175,7 @@ void LibraryLoaderCache::unloadAll()
 */
 UrlStringList LibraryLoaderCache::cachedLibs() const
 {
+    SingleLock lock(&pdm->mutex);
     UrlStringList list;
     Hash<UrlString, LoaderPtr*>::Iterator it = pdm->map.begin();
     while (it != pdm->map.constEnd())

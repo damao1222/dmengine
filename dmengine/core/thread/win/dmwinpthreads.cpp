@@ -72,7 +72,7 @@ void pthread_cond_init(pthread_cond_t *cond, const void *unused_attr)
     }
 
     /* non native condition variables */
-    win32_cond = (win32_cond_t*)DM::Malloc(sizeof(win32_cond_t));
+    win32_cond = (win32_cond_t*)DM_NS::Malloc(sizeof(win32_cond_t));
     if (!win32_cond)
         return;
     cond->ptr = win32_cond;
@@ -99,7 +99,7 @@ void pthread_cond_destroy(pthread_cond_t *cond)
     CloseHandle(win32_cond->waiters_done);
     pthread_mutex_destroy(&win32_cond->mtx_waiter_count);
     pthread_mutex_destroy(&win32_cond->mtx_broadcast);
-    DM::Free(&win32_cond);
+    DM_NS::Free(&win32_cond);
     cond->ptr = NULL;
 }
 

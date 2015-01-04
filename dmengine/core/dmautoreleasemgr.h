@@ -17,11 +17,11 @@
 #ifndef DMAUTORELEASEMGR_H
 #define DMAUTORELEASEMGR_H
 
-#include "dmsingleton.h"
+#include "dmnamespace.h"
 DM_BEGIN_NAMESPACE
 class BaseRefPtr;
 DM_PRIVATE_CLASS(AutoReleaseManager);
-class DM_DLL_EXPORT AutoReleaseManager: public Singleton<AutoReleaseManager>
+class DM_DLL_EXPORT AutoReleaseManager
 {
     DM_DECLARE_PRIVATE(AutoReleaseManager)
 public:
@@ -29,36 +29,53 @@ public:
     ~AutoReleaseManager();
 
     /** 
-     * 自动释放obj，加入自动释放对象池。注意，调用该方法不会retain该对象
+     * 自动释放obj，加入自动释放对象池。注意，调用该方法不会retain该对象（线程安全）.
      * @param obj  需要自动释放的对象
      */
     void autoRelease(BaseRefPtr *obj);
 
     /** 
-     * 取消自动释放，从对象池中取出该对象。注意，调用该方法不会release该对象，需要自己release
+     * 取消自动释放，从对象池中取出该对象。注意，调用该方法不会release该对象，需要自己release（线程安全）.
      * @param obj  取消自动释放的对象
      * @return 成功返回true，失败返回false
      */
     dbool cancelRelease(BaseRefPtr *obj);
 
     /** 
-     * 将自动释放对象池中的所有对象全部release并清空对象池
+     * 将自动释放对象池中的所有对象全部release并清空对象池（线程安全）.
      */
     void releaseAll();
 
     /** 
-     * 检查自动释放对象池中的所有对象，release所有引用计数为1的对象（认为没有其他代码在持有该对象，可以释放）
+     * 检查自动释放对象池中的所有对象，release所有引用计数为1的对象（认为没有其他代码在持有该对象，可以释放，线程安全）.
      */
     void cleanInvalid();
 
     /** 
-     * 获得自动释放池中负责管理释放的对象个数
+     * 获得自动释放池中负责管理释放的对象个数（线程安全）.
      * @return 返回对象个数
      */
     duint32 managedCount() const;
-};
 
-#define DM_AUTORELEASE(x) AutoReleaseManager::getInstance()->autoRelease(x)
-#define DM_CANCELAUTORELEASE(x) AutoReleaseManager::getInstance()->cancelRelease(x)
+    /** 
+     * 获得AutoReleaseManager的单例，如果单例不存在则new一个AutoReleaseManager对象（线程安全）.
+     * @return 返回AutoReleaseManager单例.
+     */
+    static AutoReleaseManager* getInstance();
+
+    /** 
+     * 获得AutoReleaseManager的单例，如果单例存在返回单例指针，否则返回NULL
+     * @return 返回AutoReleaseManager单例.
+     */
+    static AutoReleaseManager* instance();
+
+    /** 
+     * 释放AutoReleaseManager的单例（线程安全）.
+     */
+    static void releaseInstance();
+};
 DM_END_NAMESPACE
+
+#define DM_AUTORELEASE(x) DM_NS::AutoReleaseManager::instance()->autoRelease(x)
+#define DM_CANCELAUTORELEASE(x) DM_NS::AutoReleaseManager::instance()->cancelRelease(x)
 #endif // DMAUTORELEASEMGR_H

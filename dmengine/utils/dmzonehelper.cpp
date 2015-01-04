@@ -12,8 +12,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 #include "dmzonehelper.h"
 #include "dmdebug.h"
 
-namespace DM
-{
+DM_BEGIN_NAMESPACE
 class ZoneHelperPrivate
 {
 public:
@@ -33,9 +32,7 @@ public:
 
     dint mZoneSize;
 };
-}
 
-using namespace DM;
 ZoneHelperPrivate::ZoneHelperPrivate():
     mWidth(0),
     mHeight(0),
@@ -271,3 +268,4 @@ ZoneHelper &ZoneHelper::operator=(const ZoneHelper &other)
     return (*this);
 }
 
+DM_END_NAMESPACE

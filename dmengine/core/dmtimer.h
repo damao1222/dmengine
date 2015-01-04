@@ -117,7 +117,7 @@ private:
 };
 
 #define DM_CONNECT_TIMER(TimerPtr, ClassName, ClassPtr, FuncName) \
-            DM_CONNECT(DM::Timer, TimerPtr, emitTimeout, ClassName, ClassPtr, FuncName)
+            DM_CONNECT(DM_NS::Timer, TimerPtr, emitTimeout, ClassName, ClassPtr, FuncName)
 
 template<class T, void(T::*fn)(TimeEvent *event)>
 void TimerCallback(void *obj, TimeEvent *event)

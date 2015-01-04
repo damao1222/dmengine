@@ -119,19 +119,19 @@ public:
     dbool sendBroadcast(const BroadcastFilter &filter, const Variant &msg);
 
     /** 
-     * 获得Application的单例，如果没有则创建
-     * @return 单例
+     * 获得Application的单例，如果没有则创建.
+     * @return 单例.
      */
     static Application* getInstance();
 
     /** 
-     * 获得Application的单例，如果没有则返回NULL
+     * 获得Application的单例，如果没有则返回NULL.
      * @return 单例
      */
     static Application* instance();
 
     /** 
-     * 释放Application的单例
+     * 释放Application的单例.
      */
     static void releaseInstance();
 
@@ -155,6 +155,6 @@ private:
 };
 
 DM_END_NAMESPACE
-#define g_application DM_GLOBAL_OBJ(DM::Application)
-#define dmApp (*DM::Application::getInstance())
+#define g_application DM_GLOBAL_OBJ(DM_NS::Application)
+#define dmApp (*DM_NS::Application::getInstance())
 #endif // DMAPPLICATION_H

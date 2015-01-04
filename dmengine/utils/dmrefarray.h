@@ -175,7 +175,7 @@ protected:
 DM_END_NAMESPACE
 
 #define DM_FOREACH_ARRAY(ITEM, ARRAY) \
-        DM::ArrayContainer __array__(ARRAY, &ITEM);   \
+        DM_NS::ArrayContainer __array__(ARRAY, &ITEM);   \
         if (!ARRAY->isEmpty())                      \
             for (int __index__=0; __array__.check(__index__); ++__index__)
 #endif //DMREFARRAY_H

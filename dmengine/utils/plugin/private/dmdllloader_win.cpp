@@ -48,11 +48,11 @@ dbool DllLoaderWin::load()
     pdm->dllHandle = LoadLibraryExW(strFileName.toCharStr(), NULL, LOAD_WITH_ALTERED_SEARCH_PATH);
     if (!pdm->dllHandle)
     {
-        LPVOID lpMsgBuf;
+        wchar_t* lpMsgBuf;
         DWORD dw = GetLastError(); 
 
-        FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, dw, 0, (LPTSTR) &lpMsgBuf, 0, NULL );
-        DM_LOGW("%s: Failed to load %s with error %d:%s", strFileName.toCharStr(), dw, lpMsgBuf);
+        FormatMessage(FORMAT_MESSAGE_ALLOCATE_BUFFER | FORMAT_MESSAGE_FROM_SYSTEM | FORMAT_MESSAGE_IGNORE_INSERTS, NULL, dw, 0, (LPWSTR)&lpMsgBuf, 0, NULL );
+        DM_LOGW("Failed to load %s with error %d:%s", strFileName.toCharStr(), dw, lpMsgBuf);
         LocalFree(lpMsgBuf);
         return false;
     }

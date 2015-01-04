@@ -87,6 +87,6 @@ typedef void (Object::*CallFunc)(const Variant &param);
 
 DM_END_NAMESPACE
 
-#define DM_CALLFUNC(Func) (DM::CallFunc)(&Func)
+#define DM_CALLFUNC(Func) (DM_NS::CallFunc)(&Func)
 //#include "dmobjectpro.h"
 #endif //DMOBJECT_H

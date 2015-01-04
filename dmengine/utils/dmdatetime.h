@@ -59,6 +59,14 @@ public:
     dint day() const;
 
     /** 
+     * 获得年月日
+     * @param pYear  年输出地址
+     * @param pMonth  月输出地址
+     * @param pDay  日输出地址
+     */
+    void get(dint *pYear, dint *pMonth, dint *pDay);
+
+    /** 
      * 获得当前日期
      * @return 当前日期
      */

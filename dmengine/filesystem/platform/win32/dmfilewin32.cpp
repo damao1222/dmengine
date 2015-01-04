@@ -247,6 +247,16 @@ dbool FileWin32::getFileInfos(const UrlString& url, FileInfoList &list, dint fil
     return false;
 }
 
+dbool FileWin32::copyTo(const UrlString& destUrl)
+{
+    if (destUrl.isEmpty())
+        return false;
+
+    UrlString destFile = GetLocal(destUrl);
+
+    return ::CopyFile(pdm->url.toCharStr(), destFile.toCharStr(), true)  != 0;
+}
+
 FileWin32::FileWin32():
     C_D(FileWin32)
 {

@@ -19,19 +19,19 @@
     modify:
         2014/01/15 ： 突破2012/01/19版本的使用限制，其中第2点 可以用过take接口来解决：
 
-            CLASS* A = new CLASS; DM::Ref ref(A);  ref.take(); DM::Ref another_ref(A);
-            其中继承关系的指针可通过 DM::RefEval(A, B)来赋值
+            CLASS* A = new CLASS; DM_NS::Ref ref(A);  ref.take(); DM_NS::Ref another_ref(A);
+            其中继承关系的指针可通过 DM_NS::RefEval(A, B)来赋值
 
         2012/01/19 : 创建
 
             使用限制：
             由于可能会引起内存泄漏、重复析构以及错误引用内存地址等问题，应避免如下情况：
-            1、不要构造一个临时的DM::Ref作为函数的参数 ：
-                foo(DM::Ref(new CLASS));
+            1、不要构造一个临时的DM_NS::Ref作为函数的参数 ：
+                foo(DM_NS::Ref(new CLASS));
             2、不要同时为同一个指针做引用计数，避免循环引用:
-                CLASS* A = new CLASS; DM::Ref ref(A); DM::Ref another_ref(A);
-            3、避免在非同一个作用域内使用list，vector等容器装载DM::Ref对象 :
-                {std::list< DM::Ref<CLASS> > mList; mList.push_back(ref);} {mList[i].get()->do()}
+                CLASS* A = new CLASS; DM_NS::Ref ref(A); DM_NS::Ref another_ref(A);
+            3、避免在非同一个作用域内使用list，vector等容器装载DM_NS::Ref对象 :
+                {std::list< DM_NS::Ref<CLASS> > mList; mList.push_back(ref);} {mList[i].get()->do()}
                如果确实需要使用，请使用swap将容器内的对象与装载对象交换，使容器获取主释放权 ：
                 {list.push_back(ref);list.back().swap(ref);} list.clean();//release here
 */
