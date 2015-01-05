@@ -1,0 +1,87 @@
+﻿生成启动时间为 2013/11/14 22:42:12。
+     1>项目“K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\dmengine.vcxproj”在节点 3 上(Build 个目标)。
+     1>ClCompile:
+         K:\work\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\CL.exe /c /I"K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\..\dmengine\graphics" /I"K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\..\dmengine\core" /I"K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\..\dmengine\public" /I"K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\..\dmengine\utils" /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /ZI /nologo /W1 /WX- /Od /Oy- /D _USRDLL /D _WP8 /D _WINDLL /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yc"pch.h" /Fp"Debug\dmengine.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt pch.cpp
+         pch.cpp
+         K:\work\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\CL.exe /c /I"K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\..\dmengine\graphics" /I"K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\..\dmengine\core" /I"K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\..\dmengine\public" /I"K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\..\dmengine\utils" /AI"C:\Program Files (x86)\Windows Phone Kits\8.0\Windows Metadata" /ZI /nologo /W1 /WX- /Od /Oy- /D _USRDLL /D _WP8 /D _WINDLL /D WINAPI_FAMILY=WINAPI_FAMILY_PHONE_APP /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ..\dmengine\core\dmapplication.cpp ..\dmengine\core\dmautoreleasemgr.cpp ..\dmengine\core\dmcoreapplication.cpp ..\dmengine\core\dmeventfilter.cpp ..\dmengine\core\dmgraphicsitem.cpp ..\dmengine\core\dmgraphicsobject.cpp ..\dmengine\core\dmliveobject.cpp ..\dmengine\core\dmmalloc.cpp ..\dmengine\core\dmobject.cpp ..\dmengine\core\dmobserver.cpp ..\dmengine\core\dmtimer.cpp ..\dmengine\core\private\dmliveobject_p.cpp ..\dmengine\core\thread\dmthread.cpp ..\dmengine\graphics\dmcircle.cpp ..\dmengine\graphics\dmdirection.cpp ..\dmengine\graphics\dmgraphicsmath.cpp ..\dmengine\graphics\dmline.cpp ..\dmengine\graphics\dmpoint.cpp ..\dmengine\graphics\dmrect.cpp ..\dmengine\public\dmmath.cpp ..\dmengine\utils\dmbytebuffer.cpp ..\dmengine\utils\dmcollision.cpp ..\dmengine\utils\dmgraphicsutils.cpp ..\dmengine\utils\dmhash.cpp ..\dmengine\utils\dmlogger.cpp ..\dmengine\utils\dmprobabilityutil.cpp ..\dmengine\utils\dmrandom.cpp ..\dmengine\utils\dmrefarray.cpp ..\dmengine\utils\dmstringutil.cpp ..\dmengine\utils\dmtime.cpp ..\dmengine\utils\dmvector.cpp ..\dmengine\utils\dmzonehelper.cpp ..\dmengine\utils\private\dmrefarray_p.cpp dllmain.cpp
+         dllmain.cpp
+         dmrefarray_p.cpp
+         dmzonehelper.cpp
+         dmvector.cpp
+         dmtime.cpp
+         dmstringutil.cpp
+         dmrefarray.cpp
+         dmrandom.cpp
+         dmprobabilityutil.cpp
+         dmlogger.cpp
+         dmhash.cpp
+         dmgraphicsutils.cpp
+         dmcollision.cpp
+         dmbytebuffer.cpp
+     1>k:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\cpp\seadefence-all_platfrom\sea-defence\dmengine\dmengine\utils\dmbytebuffer.cpp(49): warning C4172: 返回局部变量或临时变量的地址
+         dmmath.cpp
+         dmrect.cpp
+         dmpoint.cpp
+         dmline.cpp
+         dmgraphicsmath.cpp
+         dmdirection.cpp
+         正在生成代码...
+         正在编译...
+         dmcircle.cpp
+         dmthread.cpp
+         dmliveobject_p.cpp
+         dmtimer.cpp
+         dmobserver.cpp
+         dmobject.cpp
+         dmmalloc.cpp
+         dmliveobject.cpp
+         dmgraphicsobject.cpp
+         dmgraphicsitem.cpp
+         dmeventfilter.cpp
+         dmcoreapplication.cpp
+         dmautoreleasemgr.cpp
+         dmapplication.cpp
+         正在生成代码...
+       Link:
+         K:\work\Program Files (x86)\Microsoft Visual Studio 11.0\VC\WPSDK\WP80\bin\link.exe /ERRORREPORT:PROMPT /OUT:"K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\\Debug\wp8\dmengine\dmengine.dll" /INCREMENTAL /NOLOGO WindowsPhoneCore.lib RuntimeObject.lib PhoneAppModelHost.lib /MANIFEST:NO /DEBUG /PDB:"K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\\Debug\wp8\dmengine\dmengine.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /WINMD:NO /DYNAMICBASE /NXCOMPAT /IMPLIB:"K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\\Debug\wp8\dmengine\dmengine.lib" /MACHINE:X86 /DLL Debug\dmapplication.obj
+         Debug\dmautoreleasemgr.obj
+         Debug\dmcoreapplication.obj
+         Debug\dmeventfilter.obj
+         Debug\dmgraphicsitem.obj
+         Debug\dmgraphicsobject.obj
+         Debug\dmliveobject.obj
+         Debug\dmmalloc.obj
+         Debug\dmobject.obj
+         Debug\dmobserver.obj
+         Debug\dmtimer.obj
+         Debug\dmliveobject_p.obj
+         Debug\dmthread.obj
+         Debug\dmcircle.obj
+         Debug\dmdirection.obj
+         Debug\dmgraphicsmath.obj
+         Debug\dmline.obj
+         Debug\dmpoint.obj
+         Debug\dmrect.obj
+         Debug\dmmath.obj
+         Debug\dmbytebuffer.obj
+         Debug\dmcollision.obj
+         Debug\dmgraphicsutils.obj
+         Debug\dmhash.obj
+         Debug\dmlogger.obj
+         Debug\dmprobabilityutil.obj
+         Debug\dmrandom.obj
+         Debug\dmrefarray.obj
+         Debug\dmstringutil.obj
+         Debug\dmtime.obj
+         Debug\dmvector.obj
+         Debug\dmzonehelper.obj
+         Debug\dmrefarray_p.obj
+         Debug\dllmain.obj
+         Debug\pch.obj
+            正在创建库 K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\\Debug\wp8\dmengine\dmengine.lib 和对象 K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\\Debug\wp8\dmengine\dmengine.exp
+         dmengine.vcxproj -> K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\\Debug\wp8\dmengine\dmengine.dll
+     1>已完成生成项目“K:\workspace\visual studio\cocos2d-x-2.2\cocos2d-x-2.2\samples\Cpp\seadefence-all_platfrom\sea-defence\dmengine\proj.wp8\dmengine.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:59.97
