@@ -51,13 +51,20 @@ typedef enum{
 #define DM_SET_LOGLEVEL(X) DM_NS::Logger::instance()->setLogLevel(X)
 //assert
 #define DM_ASSERT_X(cond, msg) ((!(cond)) ? DM_NS::Logger::instance()->log(DM_NS::LOGFATAL, "<%s:%d>(%s) \n%s", __FILE__, __LINE__, __FUNCTION__, msg) : dm_noop())
-#else
-    #define DM_LOG(LEVEL, FORMAT, ARG...)
+#else //DM_DEBUG
+  #ifdef DM_OS_WIN
+    #define DM_LOG(LEVEL, FORMAT, ...)
     #define DM_LOGI(FORMAT, ...)
     #define DM_LOGW(FORMAT, ...)
     #define DM_FATAL(FORMAT, ...)
-    #define DM_SET_LOGLEVEL(X)
-    #define DM_ASSERT_X(cond, msg) do {DM_ASSERT(cond); DM_UNUSED(msg); }while(0)
+  #else
+    #define DM_LOG(LEVEL, FORMAT, ARG...)
+    #define DM_LOGI(FORMAT, ARG...)
+    #define DM_LOGW(FORMAT, ARG...)
+    #define DM_FATAL(FORMAT, ARG...)
+  #endif
+  #define DM_SET_LOGLEVEL(X)
+  #define DM_ASSERT_X(cond, msg) do {DM_ASSERT(cond); DM_UNUSED(msg); }while(0)
 #endif
 DM_END_NAMESPACE
 

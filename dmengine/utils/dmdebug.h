@@ -20,12 +20,20 @@
 #include "dmlogger.h"
 
 #ifndef DM_DEBUG
-#define DMDEBUG(a, b...)
+#ifdef DM_OS_WIN
+#define DMDEBUG(FORMAT, ...)
 #else
+#define DMDEBUG(FORMAT, ARG...)
+#endif
+#else //DM_DEBUG
 //#include <stdio.h>
 //#define DMDEBUG(a, b...) printf("%s <%s:%d> "a, __FUNCTION__, __FILE__, __LINE__, ##b)
 //#define DMDEBUG(a, b...) DM_LOG(LOGDEBUG, a, ##b)
+#ifdef DM_OS_WIN
 #define DMDEBUG(FORMAT, ...) DM_LOG(DM_NS::LOGDEBUG, FORMAT, ##__VA_ARGS__)
+#else
+#define DMDEBUG(FORMAT, ARG...) DM_LOG(DM_NS::LOGDEBUG, FORMAT, ##ARG)
+#endif
 #endif
 
 
