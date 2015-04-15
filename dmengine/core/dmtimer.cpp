@@ -51,7 +51,8 @@ Timer::Timer(TimeoutCallback *cb):
 
 Timer::~Timer()
 {
-    D_D(Timer);
+	stop();
+	D_D(Timer);
 }
 
 void Timer::setInterval(dreal interval)
@@ -107,8 +108,8 @@ void Timer::stop()
         LiveObject::stopTimer(pdm->id);
         LiveObject::stop();
         pdm->isRunning = false;
-        deactivate();
     }
+	deactivate();
 }
 
 void Timer::onTimeEvent(TimeEvent *event)
