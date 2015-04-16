@@ -332,6 +332,12 @@
     <ClCompile Include="dmengine\utils\plugin\dmlibraryloadercache.cpp">
       <Filter>utils\plugin</Filter>
     </ClCompile>
+    <ClCompile Include="dmengine\utils\dmbytearray.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="dmengine\utils\dmvarlenarray.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dmengine\core\dmapplication.h">
@@ -741,6 +747,15 @@
     </ClInclude>
     <ClInclude Include="dmengine\public\dmdllsingleton.h">
       <Filter>public</Filter>
+    </ClInclude>
+    <ClInclude Include="dmengine\utils\dmbytearray.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="dmengine\utils\private\dmbytearray_p.h">
+      <Filter>utils\private</Filter>
+    </ClInclude>
+    <ClInclude Include="dmengine\utils\dmvarlenarray.h">
+      <Filter>utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
