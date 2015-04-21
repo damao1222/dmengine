@@ -58,13 +58,13 @@ public:
     dbool operator!=(const VarLenArray &other) const;
 
 private:
-    T *p;
+    T *p; dint s; dint c;
     void realloc(dint nSize);
 };
 
 template <typename T>
-VarLenArray<T>::VarLenArray(dint nSize /*= 0*/)
-    p(NULL)
+VarLenArray<T>::VarLenArray(dint nSize /*= 0*/):
+    p(NULL), s(0), c(0)
 {
     realloc(nSize);
 }
@@ -78,7 +78,7 @@ VarLenArray<T>::~VarLenArray()
 template <typename T>
 void VarLenArray<T>::resize(dint nSize)
 {
-
+    realloc(nSize);
 }
 
 template <typename T>
@@ -138,49 +138,52 @@ const T* VarLenArray<T>::constData() const
 template <typename T>
 dint VarLenArray<T>::size() const
 {
-
+    return s;
 }
 
 template <typename T>
 dbool VarLenArray<T>::isEmpty() const
 {
-
+    return p == NULL || s == 0;
 }
 
 template <typename T>
 void VarLenArray<T>::clear()
 {
-
+    if (p)
+    {
+        Free(p); p = NULL;
+    }
 }
 
 template <typename T>
 const T& VarLenArray<T>::at(dint index) const
 {
-
+    return p[index];
 }
 
 template <typename T>
 T& VarLenArray<T>::operator[](dint index)
 {
-
+    return p[index];
 }
 
 template <typename T>
 const T& VarLenArray<T>::operator[](dint index) const
 {
-
+    return p[index];
 }
 
 template <typename T>
 dbool VarLenArray<T>::operator==(const VarLenArray &other) const
 {
-
+    return p == other.p && s == other.s;
 }
 
 template <typename T>
 dbool VarLenArray<T>::operator!=(const VarLenArray &other) const
 {
-
+    return !((*this) == other);
 }
 
 template <typename T>
@@ -188,9 +191,19 @@ void VarLenArray<T>::realloc(dint nSize)
 {
     if (nSize == 0) return;
     if (p == NULL)
-        p = Malloc(nSize * sizeof(T));
+    {
+        size_t size = nSize * sizeof(T);
+        p = Malloc(size);
+        DM_CHECK_PTR(p);
+        s = size;
+    }
     else
-        p = Realloc(p, nSize * sizeof(T))
+    {
+        size_t size = nSize * sizeof(T);
+        p = Realloc(p, size);
+        DM_CHECK_PTR(p);
+        s = size;
+    }
 }
 DMVARLENARRAY_H
 #endif // DMBYTEARRAY_H

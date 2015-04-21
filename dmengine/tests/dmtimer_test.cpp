@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2012-2014 Xiongfa Li, <damao1222@live.com>
+   Copyright (C) 2012-2014 Xiongfa Li
    All rights reserved.
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,32 +15,48 @@
    limitations under the License.
 */
 
-#include "dmliveobject.h"
-#include "private/dmliveobject_p.h"
-#include "dmapplication.h"
+#include "dmtimer_test.h"
+#include "dmtimer.h"
 #include "dmlogger.h"
 
 DM_BEGIN_NAMESPACE
-LiveObject::LiveObject():
-    C_D(LiveObject)
+
+int g_count = 0;
+Timer *g_timer;
+
+class TimerTmp
 {
+    
+public:
+    void onTimeout(TimeEvent *event)
+    {
+        ++g_count;
+        if (g_count > 10)
+        {
+            g_timer->stop();
+        }
+        DM_LOGI("time out ! id:%d time:%g", event->id, event->interval);
+    }
+};
+
+TimerTmp *g_tmp;
+
+dbool TimerTest::init()
+{
+    g_tmp = new TimerTmp();
+    g_timer = new Timer(TIMER_CLASS_CALLBACK(TimerTmp, onTimeout), g_tmp);
+    return true;
 }
 
-LiveObject::LiveObject(LiveObjectPrivate *p):
-    pdm(p)
+void TimerTest::cleanup()
 {
-
+    delete g_tmp;
+    delete g_timer;
 }
 
-LiveObject::~LiveObject()
+void TimerTest::run()
 {
-    D_D(LiveObject);
+    g_timer->start(1, true);
 }
-
-dbool LiveObject::isAcceptInput() const
-{
-    return pdm->acceptInput;
-}
-
-
 DM_END_NAMESPACE
+

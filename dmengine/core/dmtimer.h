@@ -17,20 +17,12 @@
 
 #ifndef TIMER_H
 #define TIMER_H
-#include "dmliveobject.h"
-#include "dmobjectpro.h"
+#include "private/dmliveobject_p.h"
+#include "dmevent.h"
+
 DM_BEGIN_NAMESPACE
-DM_PRIVATE_CLASS(Timer);
-class Timer;
-class TimeoutCallback
-{
-public:
-    virtual void onTimeout(Timer *timer, TimeEvent *event) = 0;
-};
-
-typedef void (*TimerCallbackFunc)(void *obj, TimeEvent *event);
-
-class DM_DLL_EXPORT Timer: public LiveObject
+class Application;
+class DM_DLL_EXPORT Timer
 {
     DM_DECLARE_PRIVATE(Timer)
 public:
@@ -41,13 +33,11 @@ public:
      * @param func  超时回调函数
      * @param target 超时回调附加参数  
      */
-    explicit Timer(TimerCallbackFunc func, void *target = NULL);
+    explicit Timer(TimerCallbackFunc func, void *param = NULL);
 
     /** 
-     * 构造函数
-     * @param cb  超时回调类指针
+     * 析构函数
      */
-    explicit Timer(TimeoutCallback *cb);
     ~Timer();
 
     /** 
@@ -81,6 +71,12 @@ public:
     dbool isTiming() const;
 
     /** 
+     * 获得计时器剩余的时间
+     * @return 计时器剩余时间
+     */
+    dreal remainTime() const;
+
+    /** 
      * 启动计时器
      * @param interval  超时时间，以秒为单位
      * @param repeat  是否一直重复
@@ -103,21 +99,11 @@ public:
      */
     void stop();
 
-protected:
-    void onTimeEvent(TimeEvent *event);
-
-    DM_OBJECT
-    /** 
-     * 超时信号，将调用连接到该信号的方法
-     */
-    DM_SIGNAL(emitTimeout)
-
 private:
+    friend class TimerProxy;
+    friend class Application;
     DM_DISABLE_COPY(Timer)
 };
-
-#define DM_CONNECT_TIMER(TimerPtr, ClassName, ClassPtr, FuncName) \
-            DM_CONNECT(DM_NS::Timer, TimerPtr, emitTimeout, ClassName, ClassPtr, FuncName)
 
 template<class T, void(T::*fn)(TimeEvent *event)>
 void TimerCallback(void *obj, TimeEvent *event)
@@ -125,6 +111,8 @@ void TimerCallback(void *obj, TimeEvent *event)
     (static_cast<T*>(obj)->*fn)(event);
 }
 
+#define TIMER_CLASS_CALLBACK(CLASS, CLASSFUNC) \
+            TimerCallback<CLASS, &CLASS::CLASSFUNC>
 /*
  * This Template is useful, for example:
     class Test

@@ -18,7 +18,6 @@
 #ifndef DMAPPLICATION_H
 #define DMAPPLICATION_H
 
-#include "dmsingleton.h"
 #include "dmcoreapplication.h"
 #include "input/dmtouchdispatcher.h"
 #include "dmsize.h"
@@ -27,7 +26,7 @@ DM_BEGIN_NAMESPACE
 class Variant;
 class UtilString;
 class BroadcastFilter;
-class LiveObject;
+class Timer;
 class AppConfig;
 class DisplayLayer;
 DM_PRIVATE_CLASS(Application);
@@ -80,27 +79,23 @@ public:
     dint height() const;
 
     /** 
-     * Activate the LiveObject
-     * 激活LiveObject，应用中需要时间因素的Object都应该激活
-     * @param obj  The Object witch need to be activated
-     * @return Return true if Success else return false
+     * 激活一个timer.
+     * @param timer  timer.
+     * @return 成功返回true，失败返回false.
      */
-    dbool activateObject(LiveObject *obj);
+    dbool activateTimer(const Timer &timer);
 
     /** 
-     * Deactivate the LiveObject
-     * 停止LiveObject，当不再需要时间因素时调用，但不推荐调用此方法，
-     * 如果只是暂时停止时间因素对Object的影响，可以调用LiveObject->stop代替。
-     * @param obj  The Object witch need to be inactivated
-     * @return Return true if Success else return false
+     * 停止一个timer.
+     * @param timer  timer.
+     * @return 成功返回true，失败返回false.
      */
-    dbool deactivateObject(LiveObject *obj);
+    dbool deactivateTimer(const Timer &timer);
 
     /** 
-     * Deactivate the LiveObject
-     * 停止所有LiveObject，使之不再受时间因素影响
+     * 停用所有timer.
      */
-    void deactivateAll();
+    void deactivateAllTimers();
 
     /** 
      * 在应用内广播消息

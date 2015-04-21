@@ -1,5 +1,5 @@
 /*
-   Copyright (C) 2012-2014 Xiongfa Li, <damao1222@live.com>
+   Copyright (C) 2012-2014 Xiongfa Li
    All rights reserved.
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,32 +15,19 @@
    limitations under the License.
 */
 
-#include "dmliveobject.h"
-#include "private/dmliveobject_p.h"
-#include "dmapplication.h"
-#include "dmlogger.h"
+#ifndef DMTIMER_TEST_H
+#define DMTIMER_TEST_H
+
+#include "dmtest.h"
 
 DM_BEGIN_NAMESPACE
-LiveObject::LiveObject():
-    C_D(LiveObject)
+class DM_DLL_EXPORT TimerTest : public Test
 {
-}
+public:
+    virtual dbool init();
+    virtual void cleanup();
 
-LiveObject::LiveObject(LiveObjectPrivate *p):
-    pdm(p)
-{
-
-}
-
-LiveObject::~LiveObject()
-{
-    D_D(LiveObject);
-}
-
-dbool LiveObject::isAcceptInput() const
-{
-    return pdm->acceptInput;
-}
-
-
+    virtual void run();
+};
 DM_END_NAMESPACE
+#endif // DMTIMER_TEST_H

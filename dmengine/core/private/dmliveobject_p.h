@@ -18,30 +18,55 @@
 #ifndef DMLIVEOBJECT_P_H
 #define DMLIVEOBJECT_P_H
 #include "dmnamespace.h"
-#include "dmhash.h"
 #include "dmatomicint.h"
-DM_BEGIN_NAMESPACE
-class Object;
-class LiveObjectPrivate;
-class UtilString;
-class TimerImpl
-{
-    friend class LiveObject;
-    friend class LiveObjectPrivate;
-public:
-    TimerImpl(): interval(0), __count(0), id(0), repeat(false), repeat_count(0), isRunning(false), stop(false){  }
-    TimerImpl(dreal fInv, duint32 nId, dbool bRepeat): interval(fInv), __count(0), id(nId), repeat(bRepeat), repeat_count(0), isRunning(false), stop(false){  }
-    static duint32 generateId();
+#include "dmrefptr.h"
+#include "dmevent.h"
 
-private:
-    dreal interval;
-    dreal __count;
-    duint32 id;
-    dbool repeat;
-    dint repeat_count;
-    dbool isRunning;
-    dbool stop;
+DM_BEGIN_NAMESPACE
+class Timer;
+class TimerPrivate;
+class Application;
+class TimerProxy : public RefPtr<TimerProxy>
+{
+    friend class Timer;
+    friend class TimerPrivate;
+    friend class Application;
+public:
+    TimerProxy(Timer *timer);
+    TimerProxy(Timer *timer, dreal fInv, duint32 nId, dbool bRepeat);
+    void checkTime(dreal dt);
+
+    static duint generateId();
     static BasicAtomicInt g_id;
+private:
+    Timer *timer;
+
+    dreal interval;
+    dreal time_count;
+    duint32 id;
+    dint repeat_count;
+
+    dreal pausetime;
+    dreal lastpause;
+
+    duint8 repeat : 1;
+    duint8 stop : 1;
+    //WARNING: __remove is only used by Application, Don't change it's value any way!
+    duint8 remove_mark : 1;
+};
+
+typedef void (*TimerCallbackFunc)(void *obj, TimeEvent *event);
+
+class TimerPrivate
+{
+public:
+    TimerPrivate();
+    void onTimeout(TimeEvent *e);
+    void* param;
+    TimerCallbackFunc func;
+    TimerProxy *proxy;
+    dreal interval;
+    dbool repeat;
 };
 
 class LiveObjectPrivate
@@ -50,10 +75,6 @@ public:
     LiveObjectPrivate() : stop(true), pausetime(0), lastpause(0), __remove(true), acceptInput(false) {}
     virtual ~LiveObjectPrivate();
 
-    void checkTime(dreal dt, Object *obj);
-    dint repeatCount(duint32 id) const;
-
-    Hash<dint, TimerImpl*> timers;
     dbool stop;
     dreal pausetime;
     dreal lastpause;

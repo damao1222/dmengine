@@ -28,6 +28,7 @@
 #include "thread/dmthread.h"
 #include "thread/dmexecutor.h"
 #include "dmwindowsystem.h"
+#include "dmtimer.h"
 #define DM_HAVE_HTTP
 #ifdef DM_HAVE_HTTP
 #include "http/dmhttpclient.h"
@@ -39,13 +40,13 @@ class ApplicationPrivate : public CoreApplicationPrivate
 public:
     ApplicationPrivate();
     AppConfig config;
-    Vector<LiveObject*> objects;
+    Vector<TimerProxy*> timers;
     TouchNotifier *notifier;
     Size resolution;
 };
 
 ApplicationPrivate::ApplicationPrivate()
-    :objects(100)
+    :timers(100)
     ,notifier(NULL)
 {
 }
@@ -57,11 +58,11 @@ Application::Application():
 
 Application::~Application()
 {
-    for (int i=0; i<d_func()->objects.size(); ++i)
+    for (int i=0; i<d_func()->timers.size(); ++i)
     {
-        d_func()->objects.at(i)->release();
+        d_func()->timers.at(i)->release();
     }
-    d_func()->objects.clear();
+    d_func()->timers.clear();
 
     DM_INTERNAL_FUNCNAME(final)();
     D_D(Application);
@@ -113,58 +114,58 @@ void Application::DM_INTERNAL_FUNCNAME(final)()
 	Logger::releaseInstance();
 }
 
-dbool Application::activateObject(LiveObject *obj)
+dbool Application::activateTimer(const Timer &timer)
 {
+    if (!isMainThread())
+    {
+        DM_LOGW("start timer must in main thread!");
+        return false;
+    }
+
     if (!this->isRunning())
     {
         DM_LOGW("Application is not running, but get a activate object request");
     }
 
-    if (obj->isActivated())
-    {
-        DM_LOGI("Notice: Object have been activated!");
-        return false;
-    }
-    //if (!objects.contains(obj))
-    {
-        //we set false here, let app to know this liveobject is in application and running
-        obj->d_func()->__remove = false;
-        obj->retain();
-        d_func()->objects.append(obj);
-        return true;
-    }
-}
-
-dbool Application::deactivateObject(LiveObject *obj)
-{
-    /*
-    int i = objects.indexOf(obj);
-    if (i < 0)
+    TimerProxy *proxy = timer.d_func()->proxy;
+    if (!proxy || !proxy->remove_mark)
     {
         return false;
     }
-    objects.at(i)->d_func()->__remove = true;
-    */
 
-    if (!obj->isActivated())
-    {
-        DM_LOGI("Notice: Object have NOT been activated!");
-        return false;
-    }
-    obj->d_func()->__remove = true;
-
+    proxy->remove_mark = false;
+    proxy->retain();
+    d_func()->timers.append(proxy);
     return true;
 }
 
-void Application::deactivateAll()
+dbool Application::deactivateTimer(const Timer &timer)
 {
-    for (int i=0; i<d_func()->objects.size(); ++i)
+    if (!isMainThread())
     {
-        LiveObject *obj = d_func()->objects.at(i);
-        obj->d_func()->__remove = true;
-        obj->release();
+        DM_LOGW("stop timer must in main thread!");
+        return false;
     }
-    d_func()->objects.clear();
+
+    TimerProxy *proxy = timer.d_func()->proxy;
+    if (!proxy || proxy->remove_mark)
+    {
+        return false;
+    }
+
+    proxy->remove_mark = true;
+    proxy->timer = NULL;
+    return true;
+}
+
+void Application::deactivateAllTimers()
+{
+    for (int i=0; i<d_func()->timers.size(); ++i)
+    {
+        TimerProxy *timer = d_func()->timers.at(i);
+        timer->remove_mark = true;
+        timer->timer = NULL;
+    }
 }
 
 dbool Application::sendBroadcast(const UtilString &filter, const Variant &msg)
@@ -202,16 +203,15 @@ void Application::onframeMove(float dt)
     //检测是否有任务超时
     dmExecutor.checkTaskTimeout(dt);
     int i = 0;
-    while (i < d_func()->objects.size()) { 
-        LiveObject* t = d_func()->objects.at(i); 
-        if (t->isDeactivated()) { 
-            d_func()->objects.removeAt(i);
-            DM_LOGI("Application::onStep release inactivated object : %p", t); 
-            t->release(); 
+    while (i < d_func()->timers.size()) { 
+        TimerProxy *timer = d_func()->timers.at(i); 
+        if (timer->remove_mark) { 
+            d_func()->timers.removeAt(i);
+            timer->release(); 
             continue; 
         } 
         else { 
-            t->frameMove(dt); 
+            timer->checkTime(dt);
             ++i; 
         }
     }; 

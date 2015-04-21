@@ -16,37 +16,94 @@
 */
 
 #include "dmtimer.h"
+#include "dmapplication.h"
 
 DM_BEGIN_NAMESPACE
-class TimerPrivate
+
+TimerPrivate::TimerPrivate():
+    param(NULL), func(NULL), proxy(NULL), interval(0), repeat(false)
+{}
+
+TimerProxy::TimerProxy(Timer *t) : 
+    timer(t), 
+    interval(0),
+    time_count(0),
+    id(0),
+    repeat_count(0),
+    pausetime(0), 
+    lastpause(0), 
+    repeat(false),
+    stop(false), 
+    remove_mark(true)
 {
-public:
-    TimerPrivate():target(NULL), func(NULL), cb(NULL), interval(0), id(0), repeat(false), isRunning(false) {}
-    void* target;
-    TimerCallbackFunc func;
-    TimeoutCallback *cb;
-    dreal interval;
-    duint32 id;
-    dbool repeat;
-    dbool isRunning;
-};
+
+}
+
+TimerProxy::TimerProxy(Timer *t, dreal fInv, duint32 nId, dbool bRepeat) : 
+    timer(t), 
+    interval(fInv),
+    time_count(0),
+    id(nId),
+    repeat_count(0),
+    pausetime(0), 
+    lastpause(0), 
+    repeat(bRepeat),
+    stop(false), 
+    remove_mark(true)
+{
+
+}
+
+void TimerProxy::checkTime(dreal dt)
+{
+    if (!timer) 
+    {
+        remove_mark = true;
+        return ;
+    }
+
+    if (stop)
+    {
+        return ;
+    }
+
+    time_count += dt;
+    if (interval <= time_count)
+    {
+        TimeEvent *e = new TimeEvent();
+        e->id = id;
+        e->interval = interval;
+        e->repeat = repeat_count;
+        if (!repeat)
+        {
+            remove_mark = true;
+            timer->d_func()->proxy = NULL;
+        }
+        timer->d_func()->onTimeout(e);
+        e->release();
+
+        if (repeat)
+        {
+            ++repeat_count;
+            time_count = 0;
+        }
+        else
+        {
+            timer = NULL;
+        }
+    }
+}
 
 Timer::Timer() :
     C_D(Timer)
 {
 }
 
-Timer::Timer(TimerCallbackFunc func, void *target/* = NULL*/):
+Timer::Timer(TimerCallbackFunc func, void *param/* = NULL*/):
     C_D(Timer)
 {
-    pdm->target = target;
+    pdm->param = param;
     pdm->func = func;
-}
-
-Timer::Timer(TimeoutCallback *cb):
-    C_D(Timer)
-{
-    pdm->cb = cb;
 }
 
 Timer::~Timer()
@@ -67,69 +124,65 @@ void Timer::setRepeat(dbool flag)
 
 dint Timer::repeatCount() const
 {
-    return LiveObject::timerRepeatCount(pdm->id);
+    return pdm->proxy ? pdm->proxy->repeat_count : 0;
 }
 
 dint Timer::id() const
 {
-    return pdm->id;
+    return pdm->proxy ? pdm->proxy->id : 0;
 }
 
 dbool Timer::isTiming() const
 {
-    return pdm->isRunning;
+    return pdm->proxy ? !pdm->proxy->remove_mark : false;
+}
+
+dreal Timer::remainTime() const
+{
+    return pdm->proxy ? pdm->proxy->interval - pdm->proxy->time_count : 0;
 }
 
 void Timer::start(dreal interval, dbool repeat/* = false*/)
 {
-    pdm->interval = interval;
-    pdm->repeat = repeat;
+    setInterval(interval);
+    setRepeat(repeat);
     start();
 }
 
 void Timer::start()
 {
-    stopAllTimer();
-    activate();
-    pdm->id = LiveObject::startTimer(pdm->interval, pdm->repeat);
-    pdm->isRunning = true;
+    stop();
+    pdm->proxy = new TimerProxy(this, pdm->interval, TimerProxy::generateId(), pdm->repeat);
+    dmApp.activateTimer(*this);
 }
 
 dbool Timer::reset()
 {
-    return resetTimer(pdm->id);
+    if (pdm->proxy)
+    {
+        pdm->proxy->time_count = 0;
+        pdm->proxy->repeat_count = 0;
+        return true;
+    }
+    return false;
 }
 
 void Timer::stop()
 {
-    //Don't stop twice
-    if (pdm->isRunning) 
+    if (pdm->proxy)
     {
-        LiveObject::stopTimer(pdm->id);
-        LiveObject::stop();
-        pdm->isRunning = false;
+        pdm->proxy->remove_mark = true;
+        pdm->proxy->timer = NULL;
+        DM_SAFE_RELEASE(pdm->proxy);
     }
-	deactivate();
+	dmApp.deactivateTimer(*this);
 }
 
-void Timer::onTimeEvent(TimeEvent *event)
+void TimerPrivate::onTimeout(TimeEvent *event)
 {
-    /*
-    if (pdm->target && pdm->func == NULL)
-        sendEvent(pdm->target, event);
-    */
-    emitTimeout();
-
-    if (pdm->func)
-        (*(pdm->func))(pdm->target, event);
-    if (pdm->cb)
-        pdm->cb->onTimeout(this, event);
-
-    if (!pdm->repeat)
-    {
-        pdm->isRunning = false;
-        deactivate();
-    }
+    if (func)
+        (*func)(param, event);
 }
+
 DM_END_NAMESPACE
 
