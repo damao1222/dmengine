@@ -26,8 +26,6 @@ class DM_DLL_EXPORT Timer
 {
     DM_DECLARE_PRIVATE(Timer)
 public:
-    Timer();
-
     /** 
      * 构造函数
      * @param func  超时回调函数
@@ -98,6 +96,22 @@ public:
      * 停止计时
      */
     void stop();
+
+    /** 
+     * 暂停计时,单位毫秒.
+     */
+    void pause(duint milliSec = UINT_MAX);
+
+    /** 
+     * 恢复及时
+     */
+    void resume();
+
+    /** 
+     * 判断是否在暂停状态.
+     * @return 如果正在暂停返回true，否则返回false
+     */
+    dbool isPaused() const;
 
 private:
     friend class TimerProxy;

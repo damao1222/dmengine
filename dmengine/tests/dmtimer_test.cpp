@@ -31,11 +31,14 @@ public:
     void onTimeout(TimeEvent *event)
     {
         ++g_count;
+        if (g_count == 5)
+            g_timer->pause(5000);
+
         if (g_count > 10)
         {
             g_timer->stop();
         }
-        DM_LOGI("time out ! id:%d time:%g", event->id, event->interval);
+        DM_LOGI("time out ! id:%d time:%g", g_count, event->interval);
     }
 };
 

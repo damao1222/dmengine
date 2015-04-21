@@ -46,12 +46,11 @@ private:
     duint32 id;
     dint repeat_count;
 
-    dreal pausetime;
-    dreal lastpause;
+    duint pausetime;
+    duint lastpause;
 
     duint8 repeat : 1;
-    duint8 stop : 1;
-    //WARNING: __remove is only used by Application, Don't change it's value any way!
+    //WARNING: remove_mark is only used by Application, Don't change it's value any way!
     duint8 remove_mark : 1;
 };
 
@@ -72,30 +71,11 @@ public:
 class LiveObjectPrivate
 {
 public:
-    LiveObjectPrivate() : stop(true), pausetime(0), lastpause(0), __remove(true), acceptInput(false) {}
+    LiveObjectPrivate() : acceptInput(false) {}
     virtual ~LiveObjectPrivate();
 
-    dbool stop;
-    dreal pausetime;
-    dreal lastpause;
-
-    //WARNING: __remove is only used by Application, Don't change it's value any way!
-    duint8 __remove : 1;
     duint8 acceptInput : 1;
-    duint8 unused : 6;
-    /*
-    duint __remove : 1;
-    duint acceptInput : 1;
-    duint pendTimer : 1;
-    duint blockSig : 1;
-    duint wasDeleted : 1;
-    duint ownObjectName : 1;
-    duint sendChildEvents : 1;
-    duint receiveChildEvents : 1;
-    duint inThreadChangeEvent : 1;
-    duint hasGuards : 1; 
-    duint unused : 22;
-    */
+    duint8 unused : 7;
 };
 
 DM_END_NAMESPACE

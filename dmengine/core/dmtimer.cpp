@@ -32,8 +32,7 @@ TimerProxy::TimerProxy(Timer *t) :
     repeat_count(0),
     pausetime(0), 
     lastpause(0), 
-    repeat(false),
-    stop(false), 
+    repeat(false), 
     remove_mark(true)
 {
 
@@ -48,7 +47,6 @@ TimerProxy::TimerProxy(Timer *t, dreal fInv, duint32 nId, dbool bRepeat) :
     pausetime(0), 
     lastpause(0), 
     repeat(bRepeat),
-    stop(false), 
     remove_mark(true)
 {
 
@@ -62,9 +60,19 @@ void TimerProxy::checkTime(dreal dt)
         return ;
     }
 
-    if (stop)
+    //process pause
+    if (pausetime > 0)
     {
-        return ;
+        lastpause += 1000 * dt;
+        if (lastpause >= pausetime)
+        {
+            lastpause = 0;
+            pausetime = 0;
+        }
+        else
+        {
+            return ;
+        }
     }
 
     time_count += dt;
@@ -92,11 +100,6 @@ void TimerProxy::checkTime(dreal dt)
             timer = NULL;
         }
     }
-}
-
-Timer::Timer() :
-    C_D(Timer)
-{
 }
 
 Timer::Timer(TimerCallbackFunc func, void *param/* = NULL*/):
@@ -176,6 +179,29 @@ void Timer::stop()
         DM_SAFE_RELEASE(pdm->proxy);
     }
 	dmApp.deactivateTimer(*this);
+}
+
+void Timer::pause(duint milliSec /*= UINT_MAX*/)
+{
+    if (pdm->proxy)
+    {
+        pdm->proxy->pausetime = milliSec;
+        pdm->proxy->lastpause = 0;
+    }
+}
+
+void Timer::resume()
+{
+    if (pdm->proxy)
+    {
+        pdm->proxy->pausetime = 0;
+        pdm->proxy->lastpause = 0;
+    }
+}
+
+dbool Timer::isPaused() const
+{
+    return pdm->proxy ? pdm->proxy->pausetime != 0 : false;
 }
 
 void TimerPrivate::onTimeout(TimeEvent *event)
