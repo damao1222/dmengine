@@ -139,6 +139,7 @@
     <ClCompile Include="dmengine\tests\dmreadwritelock_test.cpp" />
     <ClCompile Include="dmengine\tests\dmshareddata_test.cpp" />
     <ClCompile Include="dmengine\tests\dmtimer_test.cpp" />
+    <ClCompile Include="dmengine\tests\dmvarlenarray_test.cpp" />
     <ClCompile Include="dmengine\utils\dmbuiltin.cpp" />
     <ClCompile Include="dmengine\utils\dmchar.cpp" />
     <ClCompile Include="dmengine\utils\dmcharsetconverter.cpp" />
@@ -158,6 +159,7 @@
     <ClCompile Include="dmengine\utils\dmtime.cpp" />
     <ClCompile Include="dmengine\utils\dmutilstring.cpp" />
     <ClCompile Include="dmengine\utils\dmvariant.cpp" />
+    <ClCompile Include="dmengine\utils\dmvarlenarray.cpp" />
     <ClCompile Include="dmengine\utils\dmvector.cpp" />
     <ClCompile Include="dmengine\utils\dmzonehelper.cpp" />
     <ClCompile Include="dmengine\utils\md5\dmmd5.cpp" />
@@ -273,6 +275,7 @@
     <ClInclude Include="dmengine\tests\dmshareddata_test.h" />
     <ClInclude Include="dmengine\tests\dmtest.h" />
     <ClInclude Include="dmengine\tests\dmtimer_test.h" />
+    <ClInclude Include="dmengine\tests\dmvarlenarray_test.h" />
     <ClInclude Include="dmengine\utils\dmbuiltin.h" />
     <ClInclude Include="dmengine\utils\dmchar.h" />
     <ClInclude Include="dmengine\utils\dmcharsetconverter.h" />
@@ -299,6 +302,7 @@
     <ClInclude Include="dmengine\utils\dmtime.h" />
     <ClInclude Include="dmengine\utils\dmutilstring.h" />
     <ClInclude Include="dmengine\utils\dmvariant.h" />
+    <ClInclude Include="dmengine\utils\dmvarlenarray.h" />
     <ClInclude Include="dmengine\utils\dmvecmap.h" />
     <ClInclude Include="dmengine\utils\dmvector.h" />
     <ClInclude Include="dmengine\utils\dmzonehelper.h" />

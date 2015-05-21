@@ -365,6 +365,12 @@
     <ClCompile Include="dmengine\tests\dmtimer_test.cpp">
       <Filter>tests</Filter>
     </ClCompile>
+    <ClCompile Include="dmengine\utils\dmvarlenarray.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="dmengine\tests\dmvarlenarray_test.cpp">
+      <Filter>tests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dmengine\core\dmapplication.h">
@@ -812,6 +818,12 @@
       <Filter>tests</Filter>
     </ClInclude>
     <ClInclude Include="dmengine\tests\dmtimer_test.h">
+      <Filter>tests</Filter>
+    </ClInclude>
+    <ClInclude Include="dmengine\utils\dmvarlenarray.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="dmengine\tests\dmvarlenarray_test.h">
       <Filter>tests</Filter>
     </ClInclude>
   </ItemGroup>
