@@ -33,10 +33,10 @@ void VarLenArrayTest::cleanup()
 
 void VarLenArrayTest::run()
 {
-    VarLenArray<char> arr;
+    VarLenArray<char> arr(100);
 
-    arr.append("aaa", 3);
-    arr.append(0);
+    arr.append("aaa", 4);
+//    arr.append(0);
     DM_LOGI("%s", arr.constData());
 
     arr.prepend("bbb", 2);

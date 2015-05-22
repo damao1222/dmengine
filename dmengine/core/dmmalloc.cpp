@@ -87,7 +87,22 @@ void FreeAligned(void *ptr)
     if (!ptr)
         return;
     void **ptr2 = static_cast<void **>(ptr);
-    free(ptr2[-1]);
+    ::free(ptr2[-1]);
+}
+
+void *MemCopy(void *dest, const void *src, size_t n) 
+{ 
+    return ::memcpy(dest, src, n); 
+}
+
+void *MemSet(void *dest, int c, size_t n) 
+{ 
+    return ::memset(dest, c, n); 
+}
+
+void *MemMove(void *dest, const void *src, size_t n)
+{
+    return ::memmove(dest, src, n);
 }
 
 DM_END_NAMESPACE

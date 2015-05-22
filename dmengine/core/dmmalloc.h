@@ -69,6 +69,33 @@ DM_DLL_EXPORT void *ReallocAligned(void *oldptr, size_t newsize, size_t oldsize,
  */
 DM_DLL_EXPORT void FreeAligned(void *ptr);
 
+/** 
+ * 从原地址拷贝指定大小的内存数据到目标地址.
+ * @param dest  目标内存地址.
+ * @param src  源内存地址.
+ * @param n  拷贝内存大小.
+ * @return 目标地址.
+ */
+DM_DLL_EXPORT void *MemCopy(void *dest, const void *src, size_t n);
+
+/** 
+ * 将目标地址指定大小的内存设置为指定的值
+ * @param dest  目标内存地址
+ * @param v  需要设置的值
+ * @param n  设置内存大小
+ * @return 目标地址。
+ */
+DM_DLL_EXPORT void *MemSet(void *dest, int v, size_t n);
+
+/** 
+ * 将原地址移动指定大小的内存数据到目标地址.
+ * @param dest  目标内存地址.
+ * @param src  源内存地址.
+ * @param n  移动内存大小.
+ * @return 目标地址.
+ */
+DM_DLL_EXPORT void *MemMove(void *dest, const void *src, size_t n);
+
 #ifdef DM_NO_EXCEPTIONS
 #  define DM_CHECK_PTR(p) DM_ASSERT(p);
 #else
