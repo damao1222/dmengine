@@ -20,6 +20,7 @@
 
 #include "dmmalloc.h"
 #include "dmmath.h"
+#include "dmlogger.h"
 
 DM_BEGIN_NAMESPACE
 struct VLAActualAlloc
@@ -84,7 +85,11 @@ public:
 
     void insert(const VarLenArray &other, dint pos);
     void insert(const T &d, dint pos);
-    void insert(const T *d, dint size, dint pos);
+    void insert(const T *d, dint pos, dint size);
+
+    void replace(dint index, const T &d);
+    void remove(dint index);
+    void remove(dint index, dint size);
 
     T* data();
     const T* data() const;
@@ -92,6 +97,7 @@ public:
 
     dint size() const;
     dbool isEmpty() const;
+    dbool isEqual(const VarLenArray &other) const;
 
     void clear();
 
@@ -114,6 +120,7 @@ private:
     T* realloc(dint nSize);
     dbool copy(const T *data, dint size, dint pos = 0);
     dbool move(dint src, dint dest, dint size);
+    void destroy(dint pos, dint size);
 };
 
 template <typename T, typename Alloc>
@@ -245,7 +252,7 @@ void VarLenArray<T, Alloc>::insert(const T &d, dint pos)
 }
 
 template <typename T, typename Alloc>
-void VarLenArray<T, Alloc>::insert(const T *d, dint size, dint pos)
+void VarLenArray<T, Alloc>::insert(const T *d, dint pos, dint size)
 {
     if (pos < 0 && pos > s) return ;
 
@@ -283,6 +290,30 @@ void VarLenArray<T, Alloc>::insert(const T *d, dint size, dint pos)
 }
 
 template <typename T, typename Alloc>
+void VarLenArray<T, Alloc>::replace(dint index, const T &d)
+{
+    DM_ASSERT_X(index >= 0 && index < s, "VarLenArray::replace: index out of range");
+    p[index] = d;
+}
+
+template <typename T, typename Alloc>
+void VarLenArray<T, Alloc>::remove(dint index)
+{
+    remove(index, 1);
+}
+
+template <typename T, typename Alloc>
+void VarLenArray<T, Alloc>::remove(dint index, dint size)
+{
+    DM_ASSERT_X(index >= 0 && index < s, "VarLenArray::replace: index out of range");
+    dbool ret = true;
+    ret &= move(index + size, index, s - index - size);
+    destroy(s - size, size);
+    if (ret)
+        s -= size;
+}
+
+template <typename T, typename Alloc>
 inline T* VarLenArray<T, Alloc>::data()
 {
     return p;
@@ -310,6 +341,25 @@ template <typename T, typename Alloc>
 dbool VarLenArray<T, Alloc>::isEmpty() const
 {
     return p == NULL || s == 0;
+}
+
+template <typename T, typename Alloc>
+dbool VarLenArray<T, Alloc>::isEqual(const VarLenArray &other) const
+{
+    if (s != other.s) {
+        return false;
+    }
+    else {
+        if (p == other.p)
+            return true;
+    }
+
+    for (dint i=0; i<s; ++i)
+    {
+        if (data()[i] != other.data()[i])
+            return false;
+    }
+    return true;
 }
 
 template <typename T, typename Alloc>
@@ -392,18 +442,40 @@ dbool VarLenArray<T, Alloc>::copy(const T *data, dint size, dint pos /*= 0*/)
 template <typename T, typename Alloc>
 dbool VarLenArray<T, Alloc>::move(dint src, dint dest, dint size)
 {
-    if (dest + size >= c || src > dest)
-        return false;
-
     if (src == dest) return true;
+    else if (src < dest) {
+        if (dest + size >= c)
+            return false;
 
-    dint from = s - 1, to = s - 1 + dest - src, i = 0;
-    while (i < size) 
-    {
-        p[to - i] = p[from - i];
-        i++;
+        dint from = src + size -1, to = dest + size - 1, i = 0;
+        while (i < size) {
+            p[to - i] = p[from - i];
+            i++;
+        }
+        return true;
+    } else {
+        if (dest < 0)
+            return false;
+
+        dint from = src, to = dest, i = 0;
+        while (i < size) {
+            p[to + i] = p[from + i];
+            i++;
+        }
+        return true;
     }
-    return true;
+}
+
+template <typename T, typename Alloc>
+void VarLenArray<T, Alloc>::destroy(dint pos, dint size)
+{
+    if (pos < 0 || size <= 0 || pos + size > s)
+        return ;
+
+    for (dint i=0; i<size; ++i)
+    {
+        p[pos + i] = 0;
+    }
 }
 
 DM_END_NAMESPACE

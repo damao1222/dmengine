@@ -33,7 +33,7 @@ void VarLenArrayTest::cleanup()
 
 void VarLenArrayTest::run()
 {
-    VarLenArray<char> arr(100);
+    VarLenArray<char> arr;
 
     arr.append("aaa", 4);
 //    arr.append(0);
@@ -42,7 +42,16 @@ void VarLenArrayTest::run()
     arr.prepend("bbb", 2);
     DM_LOGI("%s", arr.constData());
 
-    arr.insert("xxx", 3, 1);
+    arr.remove(3);
+    DM_LOGI("%s", arr.constData());
+
+    arr.replace(4, 'c');
+    DM_LOGI("%s", arr.constData());
+
+    arr.insert("xxx", 1, 3);
+    DM_LOGI("%s", arr.constData());
+
+    arr.remove(2, 2);
     DM_LOGI("%s", arr.constData());
 }
 DM_END_NAMESPACE
