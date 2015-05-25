@@ -67,47 +67,196 @@ template <typename T, typename Alloc = VLAActualAlloc >
 class VarLenArray
 {
 public:
-
+    /** 
+     * 构造函数.
+     * @param nSize  预分配内存大小.
+     */
     VarLenArray(dint nSize = 0);
+
+    /** 
+     * 使用已有内存缓存构造函数,将拷贝内存的内容到对象中的内存块.
+     * @param d  内存指针.
+     * @param nSize  预分配内存大小.
+     */
     VarLenArray(const T *d, dint nSize);
+
+    /** 
+     * 拷贝构造函数，将对拷贝对象进行深度拷贝.
+     * @param other  内存指针.
+     */
+    VarLenArray(const VarLenArray &other);
+
+    /** 
+     * 析构函数，删除内存缓存.
+     */
     ~VarLenArray();
 
+    /** 
+     * 重置内存缓存大小,如果指定大小小于等于现有大小，将不做任何操作.
+     * @return 指定重置的内存大小.
+     */
     void resize(dint nSize);
+
+    /** 
+     * 预留大小.
+     * @return 指定预留的内存大小.
+     */
     void reserve(dint nSize);
 
+    /** 
+     * 在当前数组后追加数组.
+     * @param other  需要追加的数组.
+     */
     void append(const VarLenArray &other);
+
+    /** 
+     * 在当前数组后追加一个元素.
+     * @param d  需要追加的元素.
+     */
     void append(const T &d);
+
+    /** 
+     * 在当前数组后追加一组元素数据.
+     * @param d  需要追加数据的指针.
+     * @param size  需要追加的元素大小.
+     */
     void append(const T *d, dint size);
 
+    /** 
+     * 在当前数组前追加数组.
+     * @param other  需要追加的数组.
+     */
     void prepend(const VarLenArray &other);
+
+    /** 
+     * 在当前数组前追加一个元素.
+     * @param d  需要追加的元素.
+     */
     void prepend(const T &d);
+
+    /** 
+     * 在当前数组前追加一组元素数据.
+     * @param d  需要追加数据的指针.
+     * @param size  需要追加的元素大小.
+     */
     void prepend(const T *d, dint size);
 
+    /** 
+     * 在指定位置插入数组.
+     * @param other  需要插入的数组.
+     * @param pos  插入位置.
+     */
     void insert(const VarLenArray &other, dint pos);
+
+    /** 
+     * 在指定位置插入元素.
+     * @param d  需要插入的元素.
+     * @param pos  插入位置.
+     */
     void insert(const T &d, dint pos);
+
+    /** 
+     * 在指定位置插入元素数据.
+     * @param d  需要插入的元素数据.
+     * @param pos  插入位置.
+     * @param size  元素数据大小.
+     */
     void insert(const T *d, dint pos, dint size);
 
+    /** 
+     * 替换一个元素.
+     * @param index  替换元素的位置.
+     * @param d  替换的元素.
+     */
     void replace(dint index, const T &d);
+
+    /** 
+     * 删除某一个元素.
+     * @param index  删除元素的索引.
+     */
     void remove(dint index);
+
+    /** 
+     * 从指定位置删除指定大小的元素.
+     * @param index  删除元素的索引.
+     * @param size  删除元素的大小.
+     */
     void remove(dint index, dint size);
 
+    /** 
+     * 内存数据.
+     * @return 数据.
+     */
     T* data();
+
+    /** 
+     * 内存数据.
+     * @return 数据.
+     */
     const T* data() const;
+
+    /** 
+     * 内存数据.
+     * @return 数据.
+     */
     const T* constData() const;
 
+    /** 
+     * 数组大小.
+     * @return 数组大小.
+     */
     dint size() const;
+
+    /** 
+     * 判断数据是否为空.
+     * @return 空返回true，否则返回false.
+     */
     dbool isEmpty() const;
+
+    /** 
+     * 比较两组数据的所有元素，判断两组数组是否相等.
+     * @return 完全相等，返回true，否则返回false.
+     */
     dbool isEqual(const VarLenArray &other) const;
 
+    /** 
+     * 清楚数组内存.
+     */
     void clear();
 
+    /** 
+     * .
+     * @param nSize  需要重新分配的大小.
+     * @return 如果发生内存重新分配，则返回之前使用的内存块，否则返回NULL.
+     */
     const T& at(dint index) const;
 
+    /** 
+     * 重新分配内存块大小，返回之前分配的内存块，需要在对数据进行操作后手工删除该废弃内存.
+     * @param nSize  需要重新分配的大小.
+     * @return 如果发生内存重新分配，则返回之前使用的内存块，否则返回NULL.
+     */
     T& operator[](dint index);
 
+    /** 
+     * 重新分配内存块大小，返回之前分配的内存块，需要在对数据进行操作后手工删除该废弃内存.
+     * @param nSize  需要重新分配的大小.
+     * @return 如果发生内存重新分配，则返回之前使用的内存块，否则返回NULL.
+     */
     const T& operator[](dint index) const;
 
+    /** 
+     * 重新分配内存块大小，返回之前分配的内存块，需要在对数据进行操作后手工删除该废弃内存.
+     * @param nSize  需要重新分配的大小.
+     * @return 如果发生内存重新分配，则返回之前使用的内存块，否则返回NULL.
+     */
     dbool operator==(const VarLenArray &other) const;
+
+    /** 
+     * 重新分配内存块大小，返回之前分配的内存块，需要在对数据进行操作后手工删除该废弃内存.
+     * @param nSize  需要重新分配的大小.
+     * @return 如果发生内存重新分配，则返回之前使用的内存块，否则返回NULL.
+     */
     dbool operator!=(const VarLenArray &other) const;
 
 private:
@@ -135,6 +284,13 @@ VarLenArray<T, Alloc>::VarLenArray(const T *d, dint nSize):
     p(NULL), s(0), c(0)
 {
     append(d, nSize);
+}
+
+template <typename T, typename Alloc>
+VarLenArray<T, Alloc>::VarLenArray(const VarLenArray &other):
+    p(NULL), s(0), c(0)
+{
+    append(other.p, other.s);
 }
 
 template <typename T, typename Alloc>

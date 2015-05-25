@@ -33,7 +33,7 @@ void VarLenArrayTest::cleanup()
 
 void VarLenArrayTest::run()
 {
-    VarLenArray<char> arr;
+    VarLenArray<char> arr(32);
 
     arr.append("aaa", 4);
 //    arr.append(0);
